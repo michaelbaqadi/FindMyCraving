@@ -1,0 +1,4 @@
+INDEX VERSION 1.126+/Users/heybob/Documents/cse190Project/cse190_shoppingapp/rfiliczkowski/.metadata/.plugins/org.eclipse.jdt.core
+3246475439.index
+4100621986.index
+2866552604.index
