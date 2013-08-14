@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.21"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/findmycraving"
+            android:layout_width="203dp"
+            android:layout_height="41dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="15dp"
+            android:layout_marginRight="18dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:layout_weight="0.55"
+            android:ems="10"
+            android:text="Find My graving"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/username_label"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:text="Username"
+        android:textSize="15dp" 
+        android:layout_marginTop="30dp"
+        />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/password_label"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:text="Password"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/retypepass_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:text="Re-Type Password"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/email_label"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:text="Email"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+        <Button
+            android:id="@+id/addPicture_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageView2"
+            android:layout_weight="0.14"
+            android:text="Add an Image" />
+
+    </RelativeLayout>
+
+     <RelativeLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content" >
+
+         <Button
+             android:id="@+id/Update_btn"
+             android:layout_width="100dp"
+             android:layout_height="wrap_content"
+             android:layout_centerHorizontal="true"
+             android:text="Update" />
+     </RelativeLayout>
+
+</LinearLayout>
