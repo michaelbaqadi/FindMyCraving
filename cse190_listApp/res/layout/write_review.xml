@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
+
+    <ImageView
+        android:id="@+id/dish_picture"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="0.5"
+        android:src="@drawable/ic_launcher" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" 
+            android:layout_marginTop="10dp">
+            
+            <TextView
+	            android:id="@+id/dish_name"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="10dp"
+	            android:text="Dish Name" 
+	            android:textSize="25dp"/>
+
+            <ImageView
+                android:id="@+id/user_profile_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" 
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/dish_name"/>
+
+                <TextView
+                    android:id="@+id/select_rating_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Rating"
+                    android:textSize="20dp" 
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/dish_name"/>
+
+                <RatingBar
+                    android:id="@+id/user_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/select_rating_text" />"
+
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" >
+
+
+	   <EditText
+	        android:id="@+id/user_review_text"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:minLines="4"
+	        android:ems="10"
+	        android:inputType="textMultiLine" />
+	
+	   <Button
+	       android:id="@+id/post_review_button"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_below="@id/user_review_text"
+	       android:layout_alignParentRight="true"
+	       android:text="Post" />
+   
+   </RelativeLayout>
+
+</LinearLayout>
