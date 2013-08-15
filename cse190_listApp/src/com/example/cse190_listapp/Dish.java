@@ -1,7 +1,7 @@
 package com.example.cse190_listapp;
 
 public  class Dish {
-	public Dish(String dishName, String picture, Double calories, Double price,
+	public Dish(String dishName, String picture, double calories, Double price,
 			String discription, int rate, int dishId, String res) {
 		super();
 		this.dishName = dishName;
@@ -15,8 +15,8 @@ public  class Dish {
 	}
 	private String  dishName;
 	private String  picture;
-	private Double  calories;
-	private Double  price;
+	private double  calories;
+	private double  price;
 	private String discription;
 	private int rating;
 	private int dishId;

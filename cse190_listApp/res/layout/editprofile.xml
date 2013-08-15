@@ -10,7 +10,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/dishpicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.21"
@@ -24,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="15dp"
             android:layout_marginRight="18dp"
-            android:layout_toRightOf="@+id/imageView1"
+            android:layout_toRightOf="@+id/dishpicture"
             android:layout_weight="0.55"
             android:ems="10"
             android:text="Find My graving"
