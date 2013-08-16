@@ -77,6 +77,7 @@
 	        android:layout_height="wrap_content"
 	    	android:layout_marginTop="40dp"
 	    	android:layout_below="@id/login_button"
+	    	android:onClick="signUpClick"
 	        android:text="Sign Up" />
 	
 	    <Button
@@ -85,6 +86,7 @@
 	        android:layout_height="wrap_content"
 	    	android:layout_marginTop="20dp"
 	    	android:layout_below="@id/sign_up_button"
+	    	android:onClick="browseClick"
 	        android:text="Browse" />
 	
 	    
