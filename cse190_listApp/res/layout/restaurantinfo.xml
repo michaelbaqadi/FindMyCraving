@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="208dp"
+	    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/picture3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1.02"
+        android:maxHeight="200dp"
+        android:maxWidth="200dp"
+        android:src="@drawable/ic_launcher" />
+
+	</RelativeLayout>
+
+    <TextView
+        android:id="@+id/restaurantname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Restaurant"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hours"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/phone1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/address3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/category3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/averageprice3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average Price"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/date3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/url3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Restraunt Website"
+        android:textSize="20sp" />
+
+</LinearLayout>
