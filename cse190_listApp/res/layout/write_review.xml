@@ -39,7 +39,7 @@
                     android:id="@+id/select_rating_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Rating"
+                    android:text="Select Rating:"
                     android:textSize="20dp" 
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/dish_name"/>
@@ -48,6 +48,8 @@
                     android:id="@+id/user_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:isIndicator="false"
                     android:numStars="5"
                     android:stepSize="0.5"
                     android:layout_alignParentRight="true"
