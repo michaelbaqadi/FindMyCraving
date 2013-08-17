@@ -61,7 +61,7 @@ public class DisplayDishesActivity extends Activity {
 			imageview.setImageResource(d.getDishId());
 			TextView dishName = (TextView) itemview.findViewById(R.id.dishname);
 			dishName.setText(d.getDishName());		
-			TextView restaurantName = (TextView) itemview.findViewById(R.id.restaurantname);
+			TextView restaurantName = (TextView) itemview.findViewById(R.id.restaurantname3);
 			restaurantName.setText(d.getRes());
 			return itemview;
 				
