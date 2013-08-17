@@ -23,21 +23,21 @@
 	</RelativeLayout>
 
     <TextView
-        android:id="@+id/restaurantname"
+        android:id="@+id/restaurantname3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Restaurant"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/hours"
+        android:id="@+id/hours3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hours"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/phone1"
+        android:id="@+id/phone3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Phone Number"

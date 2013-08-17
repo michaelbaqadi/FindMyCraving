@@ -4,49 +4,84 @@ import java.util.List;
 
 
 public class Restaurant {
-	private Double distance; 
-	private String r_name;
-	private List<Dish> dish; 
-	public Restaurant(Double distance, String r_name, List<Dish> dish) {
+	public Restaurant(Double distance, String r_name, String hours,
+			String phoneNumber, String address, String category,
+			String averagePrice, String date, String url) {
 		super();
 		this.distance = distance;
 		this.r_name = r_name;
-		this.dish = dish;
+		this.hours = hours;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.category = category;
+		this.averagePrice = averagePrice;
+		this.date = date;
+		this.url= url;
 	}
-	/**
-	 * @return the distance
-	 */
+	private Double distance; 
+	private String r_name;
+	private String hours;
+	private String phoneNumber;
+	private String address;
+	private String category;
+	private String averagePrice;
+	private String date;
+	private String url;
+
+
 	public Double getDistance() {
 		return distance;
 	}
-	/**
-	 * @param distance the distance to set
-	 */
 	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
-	/**
-	 * @return the r_name
-	 */
 	public String getR_name() {
 		return r_name;
 	}
-	/**
-	 * @param r_name the r_name to set
-	 */
 	public void setR_name(String r_name) {
 		this.r_name = r_name;
 	}
-	/**
-	 * @return the dish
-	 */
-	public List<Dish> getDish() {
-		return dish;
+	public String getHours() {
+		return hours;
 	}
-	/**
-	 * @param dish the dish to set
-	 */
-	public void setDish(List<Dish> dish) {
-		this.dish = dish;
+	public void setHours(String hours) {
+		this.hours = hours;
 	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getAveragePrice() {
+		return averagePrice;
+	}
+	public void setAveragePrice(String averagePrice) {
+		this.averagePrice = averagePrice;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 }
