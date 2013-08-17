@@ -112,8 +112,7 @@ public void findNearLocation()   {
     PlacesService service = new PlacesService("AIzaSyCcI3C-6z6d6QDPMzr0HZoBiG2S968mZt4");
 
    /* 
-    Hear you should call the method find nearst place near to central park new delhi then we pass the lat and lang of central park. hear you can be pass you current location lat and lang.The third argument is used to set the specific place if you pass the atm the it will return the list of nearest atm list. if you want to get the every thing then you should be pass "" only   
-   */
+    Hear you should call the method find nearst place near  to you
 
 /* hear you should be pass the you current location latitude and langitude, */
       List<Place> findPlaces = service.findPlaces(28.632808,77.218276,"");
