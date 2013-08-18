@@ -1,4 +1,4 @@
-package com.example.cse190_listapp;
+package com.place.com;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -51,8 +51,9 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
 /**
- * @author dwivedi ji     * 
- *        */
+ * @author dwivedi ji  
+ *    
+ * */
 public class FindPlacesNearYou extends ListActivity {
 
 private String[] placeName;

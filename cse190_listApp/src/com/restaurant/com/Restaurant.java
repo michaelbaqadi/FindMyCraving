@@ -1,14 +1,17 @@
-package com.example.cse190_listapp;
+package com.restaurant.com;
+import com.dishes.com.*;
+
 import java.util.List;
 
+import com.place.com.*;
 
-
-public class Restaurant {
-	public Restaurant(Double distance, String r_name, String hours,
-			String phoneNumber, String address, String category,
-			String averagePrice, String date, String url) {
-		super();
-		this.distance = distance;
+public class Restaurant extends Place {
+	
+	public Restaurant(String id, String icon, String name, String vicinity,
+			Double latitude, Double longitude, Double distance, String r_name,
+			String hours, String phoneNumber, String address, String category,
+			String averagePrice, String date, String url, List<Dish> dishes) {
+		super(id, icon, name, vicinity, latitude, longitude);
 		this.r_name = r_name;
 		this.hours = hours;
 		this.phoneNumber = phoneNumber;
@@ -16,9 +19,23 @@ public class Restaurant {
 		this.category = category;
 		this.averagePrice = averagePrice;
 		this.date = date;
-		this.url= url;
+		this.url = url;
+		this.dishes = dishes;
 	}
-	private Double distance; 
+	public Restaurant( String r_nameString,
+			String hoursString, String phoneNumberString, String addressString,
+			String categoryString, String averagePriceString,
+			String dateString, String urlString) {
+		
+			this.r_name = r_nameString;
+			this.hours = hoursString;
+			this.phoneNumber = phoneNumberString;
+			this.address = addressString;
+			this.category = categoryString;
+			this.averagePrice = averagePriceString;
+			this.date = dateString;
+			this.url = urlString; 
+	}
 	private String r_name;
 	private String hours;
 	private String phoneNumber;
@@ -26,15 +43,9 @@ public class Restaurant {
 	private String category;
 	private String averagePrice;
 	private String date;
-	private String url;
-
-
-	public Double getDistance() {
-		return distance;
-	}
-	public void setDistance(Double distance) {
-		this.distance = distance;
-	}
+	private String url; 
+	private List<Dish> dishes;
+	
 	public String getR_name() {
 		return r_name;
 	}
@@ -83,5 +94,10 @@ public class Restaurant {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+	public List<Dish> getDishes() {
+		return dishes;
+	}
+	public void setDishes(List<Dish> dishes) {
+		this.dishes = dishes;
+	}
 }

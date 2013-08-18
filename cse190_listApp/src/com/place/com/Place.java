@@ -1,19 +1,46 @@
-package com.example.cse190_listapp;
-
+package com.place.com;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/*
+ *  This Class Will have information about the the personal position 
+ *  In addition to  info about places near the android user
+ * */
 public class Place {
-    private String id;
+    /*public Place(String id, String icon, String name, String vicinity,
+			Double latitude, Double longitude) {
+		super();
+		this.id = id;
+		this.icon = icon;
+		this.name = name;
+		this.vicinity = vicinity;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}*/
+	public Place(String id2, String icon2, String name2, String vicinity2,
+			Double latitude2, Double longitude2) {
+		super();
+		this.id = id;
+		this.icon = icon;
+		this.name = name;
+		this.vicinity = vicinity;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	public Place()
+	{
+		
+	}
+	private String id;
     private String icon;
     private String name;
     private String vicinity;
     private Double latitude;
     private Double longitude;
+    
 
     public String getId() {
         return id;
@@ -62,8 +89,10 @@ public class Place {
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
     }
-
-    static Place jsonToPontoReferencia(JSONObject pontoReferencia) {
+    /*
+     *  This will get data of the position on map 
+     * */
+    public static Place jsonToPontoReferencia(JSONObject pontoReferencia) {
         try {
             Place result = new Place();
             JSONObject geometry = (JSONObject) pontoReferencia.get("geometry");
@@ -80,7 +109,9 @@ public class Place {
         }
         return null;
     }
-
+    /*
+     * create JSON object 
+     * */
     @Override
     public String toString() {
         return "Place{" + "id=" + id + ", icon=" + icon + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude + '}';

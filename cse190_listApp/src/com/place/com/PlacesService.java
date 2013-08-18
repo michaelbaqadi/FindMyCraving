@@ -1,4 +1,4 @@
-package com.example.cse190_listapp;
+package com.place.com;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import android.util.Log;
 
