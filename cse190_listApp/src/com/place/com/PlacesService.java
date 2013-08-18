@@ -37,7 +37,7 @@ public class PlacesService {
         try {
             String json = getJSON(urlString);
 
-            System.out.println(json);
+           // System.out.println(json);
             JSONObject object = new JSONObject(json);
             JSONArray array = object.getJSONArray("results");
 
