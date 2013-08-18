@@ -1,6 +1,5 @@
 package com.dishes.com;
 
-
 public  class Dish {
 	public Dish(String dishName, String picture, double calories, Double price,
 			String discription, int rate, int dishId, String res) {
