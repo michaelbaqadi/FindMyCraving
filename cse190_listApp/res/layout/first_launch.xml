@@ -69,6 +69,7 @@
 	        android:layout_height="wrap_content"
 	    	android:layout_marginTop="10dp"
 	    	android:layout_below="@id/password_edit"
+	    	android:onClick="logInClick"
 	        android:text="Login" />
 	
 	    <Button

@@ -11,11 +11,15 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +45,16 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 
 		
 		initiateDataConnection(_getDishURL, params);
+		
+		//when you click a dish, go to dish details page
+		ListView lv = (ListView) findViewById(R.id.dishlistview);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
+                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
+            		startActivity(intent);
+                }
+
+            });
 		
 		//populateDishList();
 		//populateListView();
@@ -137,4 +151,31 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.action_edit_profile:
+	        	Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+	    		startActivity(intent);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	/** Called when the user clicks on a list item */
+	/*public void dishListItemClick(View view) {
+			
+		Intent intent = new Intent(this, DishDetailsActivity.class);
+		startActivity(intent);
+	}*/
 }
