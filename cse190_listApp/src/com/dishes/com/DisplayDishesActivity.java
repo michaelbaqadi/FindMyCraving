@@ -31,7 +31,7 @@ public class DisplayDishesActivity extends Activity {
 			String discription, String rating
 	 * */
 	private void populateDishList() {
-
+	    // parse JSON object in to a list maybe to use it in the app
 		dish.add(new Dish("Food1","png",3.4,4.0,"It's good",3,R.drawable.ic_launcher,"Subway"));
 		dish.add(new Dish("Food2","png",3.4,4.0,"It's good",3,R.drawable.ic_launcher,"pizaa around table"));
 		

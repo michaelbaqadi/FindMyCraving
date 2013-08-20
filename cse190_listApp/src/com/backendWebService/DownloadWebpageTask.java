@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import android.os.AsyncTask;
 
-	class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+	public class DownloadWebpageTask extends AsyncTask<String, Void, String> {
 	public AsyncResponse delegate=null;
 	private List<NameValuePair> params;
 	public void setParams(List<NameValuePair> params){

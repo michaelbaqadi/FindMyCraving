@@ -23,12 +23,12 @@ public class Place {
 	public Place(String id2, String icon2, String name2, String vicinity2,
 			Double latitude2, Double longitude2) {
 		super();
-		this.id = id;
-		this.icon = icon;
-		this.name = name;
-		this.vicinity = vicinity;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.id = id2;
+		this.icon = icon2;
+		this.name = name2;
+		this.vicinity = vicinity2;
+		this.latitude = latitude2;
+		this.longitude = longitude2;
 	}
 	public Place()
 	{

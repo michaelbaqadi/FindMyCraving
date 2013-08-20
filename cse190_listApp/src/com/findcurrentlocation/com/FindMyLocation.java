@@ -42,16 +42,16 @@ public class FindMyLocation extends Activity implements LocationListener {
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		Log.d("Latitude", "disable");
+		Log.d("Latitudeaaa", "disable");
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		Log.d("Latitude", "enable");
+		Log.d("Latitudeaaa", "enable");
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		Log.d("Latitude", "status");
+		Log.d("Latitudeaaa", "status");
 	}
 }
