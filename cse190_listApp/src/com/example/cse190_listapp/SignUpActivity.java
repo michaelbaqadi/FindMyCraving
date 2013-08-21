@@ -23,7 +23,7 @@ import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
 
 public class SignUpActivity extends Activity implements AsyncResponse {
-	private static final String _checkUser = "http://cakesbyannonline.com/cse190/sql_createUser.php";
+	private static final String _checkUser = "https://cakesbyannonline.com/cse190/sql_createUser.php";
 	
 	EditText userNameInput;
 	EditText userEmailInput;

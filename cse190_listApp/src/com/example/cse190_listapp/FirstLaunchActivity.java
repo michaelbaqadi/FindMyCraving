@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
@@ -15,13 +17,14 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class FirstLaunchActivity extends Activity implements AsyncResponse{
-	private static final String _loginUrl = "http://cakesbyannonline.com/cse190/sql_login.php";
+	private static final String _loginUrl = "https://cakesbyannonline.com/cse190/sql_login.php";
 	
 	EditText userEmail;
 	EditText userPassword;
@@ -69,10 +72,8 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 		
 		login(email, password);
 		
-		/*
 		Intent intent = new Intent(this, DisplayDishesActivity.class);
 		startActivity(intent);
-		*/
 	}
 	public void login(String userEmail, String userPassword){
 		// Call the database and see if the user name and email are already in use.
@@ -99,7 +100,42 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 
 	@Override
 	public void processFinish(String output) {
-		// TODO Auto-generated method stub
+		// Need to add a preference state on login / logout
+		// Also change first launch pref
+		
+		String status = null;
+		JSONObject json = null;
+		try {
+			json = new JSONObject(output);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			status = json.getString("status");
+			Log.v("status", status);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(status.equalsIgnoreCase("match")){
+			//Create a toast popup
+        	Context context = getApplicationContext();
+        	CharSequence text = "login Successful";
+        	int duration = Toast.LENGTH_SHORT;
+        	Toast toast = Toast.makeText(context, text, duration);
+        	toast.show();
+		}
+		else {
+			Context context = getApplicationContext();
+        	CharSequence text = "Login Failed, Please Try Again";
+        	int duration = Toast.LENGTH_LONG;
+        	Toast toast = Toast.makeText(context, text, duration);
+        	toast.show();
+		}
+		
 		
 	}
 
