@@ -67,13 +67,26 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 		//TODO: authenticate data
 		userEmail = (EditText) findViewById(R.id.username_edit);
 		userPassword = (EditText) findViewById(R.id.password_edit);
-		String email = userEmail.getText().toString();
-		String password = userPassword.getText().toString();
+		String email = userEmail.getText().toString().trim();
+		String password = userPassword.getText().toString().trim();
 		
-		login(email, password);
-		
-		Intent intent = new Intent(this, DisplayDishesActivity.class);
-		startActivity(intent);
+		if (!(email.contains("@") && email.contains("."))){
+		Context context = getApplicationContext();
+	    CharSequence text = "Please Enter a Valid Email Address";
+	    int duration = Toast.LENGTH_SHORT;
+	    Toast toast = Toast.makeText(context, text, duration);
+	    toast.show();
+		} else if (password.equalsIgnoreCase("")){
+			Context context = getApplicationContext();
+		    CharSequence text = "Please Enter a Password";
+		    int duration = Toast.LENGTH_SHORT;
+		    Toast toast = Toast.makeText(context, text, duration);
+		    toast.show();
+		} else {
+			login(email, password);
+			Intent intent = new Intent(this, DisplayDishesActivity.class);
+			startActivity(intent);
+		}
 	}
 	public void login(String userEmail, String userPassword){
 		// Call the database and see if the user name and email are already in use.
@@ -127,6 +140,8 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
         	int duration = Toast.LENGTH_SHORT;
         	Toast toast = Toast.makeText(context, text, duration);
         	toast.show();
+        	// Create user object
+        	
 		}
 		else {
 			Context context = getApplicationContext();
