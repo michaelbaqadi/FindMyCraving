@@ -3,161 +3,122 @@ package com.restaurant.com;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.backendWebService.AsyncResponse;
+import com.backendWebService.DownloadWebpageTask;
 import com.example.cse190_listapp.R;
 
-import android.app.Activity;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-
-public class DisplayRestaurantInfo extends Activity {
-
-	// The JSON REST Service I will pull from
-	static String url = "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
-	// Will hold the values I pull from the JSON 
-	static String restaurantName = "";
-	static String restaurantStreet1 = "";
-	static String restaurantStreet2 = "";
-	static String restaurantCity = "";
-	static String restaurantState = "";
-	static String restaurantZip = "";
-	static String restaurantPhone = "";
-	static String restaurantEmail = "";
-	static String restaurantURL = "";
-	static String restaurantCategory = "";
-	static String restaurantAvgPriceRating = "";
-	static String restaurantTimestamp= "";
-	static String restaurantImageURL = "";
+public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 	 
-
+	private static final String _getresInfo 
+			= "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
+	DownloadWebpageTask webtask;
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// Get any saved data
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle savedInstanceState) {
 		
-		// Point to the name for the layout xml file used
-		setContentView(R.layout.restaurantinfo);
-
-		// Call for doInBackground() in MyAsyncTask to be executed
-		new MyAsyncTask().execute();
-
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.restaurantinfo);;
+		webtask = new DownloadWebpageTask();
+		webtask.delegate = this;
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+       // params.add(new BasicNameValuePair("lat", "1"));
+        //params.add(new BasicNameValuePair("long", "1"));
+			
+		
+		initiateDataConnection(_getresInfo, params);
+		 
+		
 	}
-	// Use AsyncTask if you need to perform background tasks, but also need
-	// to change components on the GUI. Put the background operations in
-	// doInBackground. Put the GUI manipulation code in onPostExecute
+	public void initiateDataConnection(String url, List<NameValuePair> params ){
+		
+        ConnectivityManager connMgr = (ConnectivityManager) 
+            getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+        	webtask.setParams(params);
+        	webtask.execute(url);   
+        } else {
+        	//Create a toast popup
+        	Context context = getApplicationContext();
+        	CharSequence text = "No network connection available.";
+        	int duration = Toast.LENGTH_SHORT;
+        	Toast toast = Toast.makeText(context, text, duration);
+        	toast.show();
+        }
+    }
+	public void processFinish(String result){
+		populateResList(result);
+		
+	}
 
-	private class MyAsyncTask extends AsyncTask<String, String, String> {
 
-		protected String doInBackground(String... arg0) {
+	/*
+	 * public Dish(String dishName, String picture, String calories, String price,
+			String discription, String rating
+	 * */
+	private void populateResList(String result) {
+		String restaurantName = "";
+		String restaurantStreet1 = "";
+		String restaurantStreet2 = "";
+		String restaurantCity = "";
+		String restaurantState = "";
+		String restaurantZip = "";
+		String restaurantPhone = "";
+		String restaurantEmail = "";
+		String restaurantURL = "";
+		String restaurantCategory = "";
+		String restaurantAvgPriceRating = "";
+		String restaurantTimestamp= "";
+		String restaurantImageURL = "";
+		
+		result = result.substring(1, result.length()-1);
+		JSONObject jsonObject = null;
+		
+		try {
+			jsonObject = new JSONObject(result);
+			 restaurantName = jsonObject.getString("restaurantName");
+			 restaurantStreet1 = jsonObject.getString("restaurantStreet1");
+			 restaurantStreet2 = jsonObject.getString("restaurantStreet2");
+			 restaurantCity = jsonObject.getString("restaurantCity");
+			 restaurantState = jsonObject.getString("restaurantName");
+			 restaurantZip = jsonObject.getString("restaurantState");
+			 restaurantPhone = jsonObject.getString("restaurantPhone");
+			 restaurantEmail = jsonObject.getString("restaurantEmail");
+			 restaurantURL = jsonObject.getString("restaurantURL");
+			 restaurantCategory = jsonObject.getString("restaurantCategory");
+			 restaurantAvgPriceRating = jsonObject.getString("restaurantAvgPriceRating");
+			 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
+			 restaurantImageURL = jsonObject.getString("restaurantImageURL");
+			 
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//JSONObject res = jsonObject.getJSONObject("restaurantName");
 
 			 
-			DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-			
-			// Define that I want to use the POST method to grab data from
-			// the provided URL
-			HttpPost httppost = new HttpPost(url);
-			
-			// Web service used is defined
-			httppost.setHeader("Content-type", "application/json");
-
-			// Used to read data from the URL
-			InputStream inputStream = null;
-			
-			// Will hold the whole all the data gathered from the URL
-			String result = null;
-
-			try {
-				
-				// Get a response if any from the web service
-				HttpResponse response = httpclient.execute(httppost);        
-				
-				// The content from the requested URL along with headers, etc.
-				HttpEntity entity = response.getEntity();
-
-				// Get the main content from the URL
-				inputStream = entity.getContent();
-				
-				// JSON is UTF-8 by default
-				// BufferedReader reads data from the InputStream until the Buffer is full
-				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-				
-				// Will store the data
-				StringBuilder theStringBuilder = new StringBuilder();
-
-				String line = null;
-				
-				// Read in the data from the Buffer untilnothing is left
-				while ((line = reader.readLine()) != null)
-				{
-					
-					// Add data from the buffer to the StringBuilder
-					theStringBuilder.append(line + "\n");
-				}
-				
-				// Store the complete data in result
-				result = theStringBuilder.toString();
-
-			} catch (Exception e) { 
-				e.printStackTrace();
-			}
-			finally {
-				
-				// Close the InputStream when you're done with it
-				try{if(inputStream != null)inputStream.close();}
-				catch(Exception e){}
-			}
-
-			// Holds Key Value pairs from a JSON source
-			JSONObject jsonObject;
-			try {
-
-				// Delete cbfunc( and ); from the results
-				
-				result = result.substring(1, result.length()-1);
-
-				jsonObject = new JSONObject(result);
-				 
-				//JSONObject res = jsonObject.getJSONObject("restaurantName");
-				 restaurantName = jsonObject.getString("restaurantName");
-				 restaurantStreet1 = jsonObject.getString("restaurantStreet1");
-				 restaurantStreet2 = jsonObject.getString("restaurantStreet2");
-				 restaurantCity = jsonObject.getString("restaurantCity");
-				 restaurantState = jsonObject.getString("restaurantName");
-				 restaurantZip = jsonObject.getString("restaurantState");
-				 restaurantPhone = jsonObject.getString("restaurantPhone");
-				 restaurantEmail = jsonObject.getString("restaurantEmail");
-				 restaurantURL = jsonObject.getString("restaurantURL");
-				 restaurantCategory = jsonObject.getString("restaurantCategory");
-				 restaurantAvgPriceRating = jsonObject.getString("restaurantAvgPriceRating");
-				 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
-				 restaurantImageURL = jsonObject.getString("restaurantImageURL");
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return result;
-
-		}
-
-		protected void onPostExecute(String result){
-
-			// Gain access so I can change the TextViews
 			TextView line1 = (TextView)findViewById(R.id.line1); 
 			TextView line2 = (TextView)findViewById(R.id.line2); 
 			TextView line3 = (TextView)findViewById(R.id.line3); 
@@ -170,7 +131,7 @@ public class DisplayRestaurantInfo extends Activity {
 			TextView line10 = (TextView)findViewById(R.id.line10); 
 			TextView line11 = (TextView)findViewById(R.id.line11); 
 			TextView line12 = (TextView)findViewById(R.id.line12); 
- 
+
 				
 			line1.setText("Name: " + restaurantName);
 			line2.setText("restaurantStreet1: " +restaurantStreet1);
@@ -186,8 +147,10 @@ public class DisplayRestaurantInfo extends Activity {
 			line12.setText("Opening Hours: " + restaurantTimestamp);
 		 
 
-		}
+		 
 
-	}
 
+    }
+		
+	
 }
