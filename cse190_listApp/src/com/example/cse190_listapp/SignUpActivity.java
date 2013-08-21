@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -33,10 +34,6 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.singup);
-		
-		
-		
-		
 	}
 
 	@Override
@@ -108,6 +105,7 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 		    Toast toast = Toast.makeText(context, text, duration);
 		    toast.show();
 		} else if (userName.length() == 0){
+			// Issue validating empty text field once user clicks into it.
 			Context context = getApplicationContext();
 		    CharSequence text = "Please Enter a User Name";
 		    int duration = Toast.LENGTH_SHORT;
@@ -122,12 +120,9 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 			
 		 } else {
 			 addUser(userName, userEmail, pw1);
+			 Intent intent = new Intent(this, DisplayDishesActivity.class);
+				startActivity(intent);
 		 }
-		
-		/*
-		Intent intent = new Intent(this, DisplayDishesActivity.class);
-		startActivity(intent);
-		*/
 	}
 
 	@Override
