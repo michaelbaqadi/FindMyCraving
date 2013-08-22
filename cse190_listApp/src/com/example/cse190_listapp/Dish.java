@@ -9,7 +9,6 @@ import android.os.Parcelable;
 public  class Dish implements Parcelable{
 	
 	private String  dishName;
-	private String  price;
 	private String description;
 	private float rating;
 	private String dishId;
@@ -238,19 +237,6 @@ public  class Dish implements Parcelable{
 	}
 
 	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-	/**
-	 * @return the price
-	 */
-	public String getPrice() {
-		return price;
-	}
-	/**
 	 * @return the description
 	 */
 	public String getDiscription() {
@@ -294,7 +280,6 @@ public  class Dish implements Parcelable{
 	
 	private void readFromParcel(Parcel in) {
 		dishName = in.readString();
-		price = in.readString();
 		description = in.readString();
 		rating = in.readFloat();
 		dishId = in.readString();
@@ -320,7 +305,6 @@ public  class Dish implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(dishName);
-        dest.writeString(price);
         dest.writeString(description);
         dest.writeFloat(rating);
         dest.writeString(dishId);
