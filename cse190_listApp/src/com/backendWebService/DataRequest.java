@@ -20,7 +20,7 @@ public class DataRequest {
 	private static final String _debugTag = "HttpAccessExample";
 	
 	
-		// This method sends and retrives data from the webservers
+		// This method sends and retrieves data from the webservers
 		public static String postData(String myurl, List<NameValuePair> params) throws IOException {
 		    InputStream is = null;
 		    	        

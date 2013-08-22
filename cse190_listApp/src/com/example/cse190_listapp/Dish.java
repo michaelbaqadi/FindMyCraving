@@ -1,26 +1,74 @@
 package com.example.cse190_listapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public  class Dish {
-	public Dish(String dishName, String picture, double calories, Double price,
-			String discription, int rate, int dishId, String res) {
-		super();
-		this.dishName = dishName;
-		this.picture = picture;
-		this.calories = calories;
-		this.price = price;
-		this.discription = discription;
-		this.rating = rate;
-		this.dishId = dishId;
-		this.res = res;
-	}
+	
 	private String  dishName;
-	private String  picture;
-	private double  calories;
-	private double  price;
-	private String discription;
-	private int rating;
-	private int dishId;
-	private String res;
+	private String  price;
+	private String description;
+	private float rating;
+	private String dishId;
+	private String pictureSm;
+	private String pictureLrg;
+	private String restaurantID;
+	private String restaurantName;
+	private String restaurantPhone;
+	private String restaurantStreet1;
+	private String restaurantStreet2;
+	private String restaurantCity;
+	private String restaurantState;
+	private String restaurantZip;
+	private String restaurantURL;
+	public List<DishPrice> prices;
+	public List<DishCalories> calories;
+
+	public Dish(String dishId, String  dishName, String description, double rating,
+	String pictureSm, String pictureLrg, String restaurantID, String restaurantName,
+	String restaurantPhone, String restaurantStreet1, String restaurantStreet2, 
+	String restaurantCity, String restaurantState, String restaurantZip, String restaurantURL) {
+	
+		this.dishId = dishId;
+		this.dishName = dishName;
+		this.description = description;
+		this.pictureSm = pictureSm;
+		this.pictureLrg = pictureLrg;
+		this.rating = (float) rating;
+		this.restaurantName = restaurantName;
+		this.restaurantPhone = restaurantPhone;
+		this.restaurantID = restaurantID;
+		this.restaurantStreet1 = restaurantStreet1;
+		this.restaurantStreet2 = restaurantStreet2;
+		this.restaurantCity = restaurantCity;
+		this.restaurantState = restaurantState;
+		this.restaurantZip = restaurantZip;
+		this.restaurantURL = restaurantURL;
+		this.prices = new ArrayList<DishPrice>();
+		this.calories = new ArrayList<DishCalories>();
+	}
+
+	public List<DishPrice> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(String price, String portion) {
+		this.prices.add(new DishPrice(this.dishId, price, portion));
+	}
+	public int getSizeOfPriceArrayList(){
+		return prices.size();
+	}
+	public List<DishCalories> getCalories() {
+		return calories;
+	}
+
+	public void setCalories(String calorie, String portion) {
+		this.calories.add(new DishCalories(this.dishId, calorie, portion));
+	}
+	public int getSizeOfCaloriesArrayList(){
+		return calories.size();
+	}
+
 	/**
 	 * @return the dishName
 	 */
@@ -33,84 +81,206 @@ public  class Dish {
 	public void setDishName(String dishName) {
 		this.dishName = dishName;
 	}
+
 	/**
-	 * @return the picture
+	 * @return the description
 	 */
-	public String getPicture() {
-		return picture;
+	public String getDescription() {
+		return description;
 	}
 	/**
-	 * @param picture the picture to set
+	 * @param descripiton the dish description to set
 	 */
-	public void setPicture(String picture) {
-		this.picture = picture;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	/**
-	 * @return the calories
+	 * @return the small picture url
 	 */
-	public double getCalories() {
-		return calories;
+	public String getPictureSm() {
+		return pictureSm;
 	}
 	/**
-	 * @param calories the calories to set
+	 * @param pictureSm the small picture url to set
 	 */
-	public void setCalories(Double calories) {
-		this.calories = calories;
+	public void setPictureSm(String pictureSm) {
+		this.pictureSm = pictureSm;
 	}
 	/**
-	 * @return the price
+	 * @return the largePicture url
 	 */
-	public Double getPrice() {
-		return price;
+	public String getPictureLrg() {
+		return pictureLrg;
 	}
+	/**
+	 * @param pictureLrg the large picture url to set
+	 */
+	public void setPictureLrg(String pictureLrg) {
+		this.pictureLrg = pictureLrg;
+	}
+	
+	/**
+	 * @return the restaurantID related to this dish
+	 */
+	public String getRestaurantID() {
+		return restaurantID;
+	}
+	/**
+	 * @param restaurantID the restaurant ID to set
+	 */
+	public void setRestaurantID(String restaurantID) {
+		this.restaurantID = restaurantID;
+	}
+	/**
+	 * @return the restaurant name
+	 */
+	public String getRestaurantName() {
+		return restaurantName;
+	}
+	/**
+	 * @param restaurantName the restaurant name to set
+	 */
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
+	}
+	/**
+	 * @return the restaurant phone
+	 */
+	public String getRestaurantPhone() {
+		return restaurantPhone;
+	}
+	/**
+	 * @param restaurantPhone the restaurant phone to set
+	 */
+	public void setRestaurantPhone(String restaurantPhone) {
+		this.restaurantPhone = restaurantPhone;
+	}
+	/**
+	 * @return the Restaurant Street 1
+	 */
+	public String getRestaurantStreet1() {
+		return restaurantStreet1;
+	}
+	/**
+	 * @param restaurantStreet1 the restaurantStreet1 to set
+	 */
+	public void setRestaurantStreet1(String restaurantStreet1) {
+		this.restaurantStreet1 = restaurantStreet1;
+	}
+	/**
+	 * @return the Restaurant Street 2
+	 */
+	public String getRestaurantStreet2() {
+		return restaurantStreet2;
+	}
+	/**
+	 * @param restaurantStreet2 the restaurantStreet2 to set
+	 */
+	public void setRestaurantStreet2(String restaurantStreet2) {
+		this.restaurantStreet2 = restaurantStreet2;
+	}
+	/**
+	 * @return the restaurant City
+	 */
+	public String getRestaurantCity() {
+		return restaurantCity;
+	}
+	/**
+	 * @param restaurantCity the restaurantCity to set
+	 */
+	public void setRestaurantCity(String restaurantCity) {
+		this.restaurantCity = restaurantCity;
+	}
+	/**
+	 * @return the Restaurant State
+	 */
+	public String getRestaurantState() {
+		return restaurantState;
+	}
+	/**
+	 * @param restaurantState the restaurantState to set
+	 */	
+	public void setRestaurantState(String restaurantState) {
+		this.restaurantState = restaurantState;
+	}
+	
+	/**
+	 * @return the Restaurant Zip
+	 */
+	public String getRestaurantZip() {
+		return restaurantZip;
+	}
+	/**
+	 * @param restaurantZip the restaurantZip to set
+	 */	
+	public void setRestaurantZip(String restaurantZip) {
+		this.restaurantZip = restaurantZip;
+	}
+	/**
+	 * @return the Restaurant URL
+	 */
+	public String getRestaurantURL() {
+		return restaurantURL;
+	}
+	/**
+	 * @param restaurantURL the restaurantURL to set
+	 */	
+	public void setRestaurantURL(String restaurantURL) {
+		this.restaurantURL = restaurantURL;
+	}
+
 	/**
 	 * @param price the price to set
 	 */
-	public void setPrice(Double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
+
 	/**
-	 * @return the discription
+	 * @return the price
 	 */
-	public String getDiscription() {
-		return discription;
+	public String getPrice() {
+		return price;
 	}
 	/**
-	 * @param discription the discription to set
+	 * @return the description
+	 */
+	public String getDiscription() {
+		return description;
+	}
+	/**
+	 * @param description the description to set
 	 */
 	public void setDiscription(String discription) {
-		this.discription = discription;
+		this.description = discription;
 	}
 	/**
 	 * @return the rating
 	 */
-	public int getRating() {
+	public float getRating() {
 		return rating;
 	}
 	/**
 	 * @param rating the rating to set
 	 */
-	public void setRating(int rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
-	public int getDishId() {
+	/**
+	 * @return the dishId
+	 */	
+	public String getDishId() {
 		return dishId;
 	}
 	/**
-	 * @param rating the rating to set
+	 * @param dishId the dishId to set
 	 */
-	public void setDishId(int dishId) {
+	public void setDishId(String dishId) {
 		this.dishId = dishId;
 	}
-	
-	public String getRes() {
-		return res;
+
+	public void setCaloriesArray(String price2) {
+		// TODO Auto-generated method stub
+		
 	}
-	/**
-	 * @param rating the rating to set
-	 */
-	public void setDishId(String res) {
-		this.res = res;
-	}
-	
 }

@@ -1,5 +1,8 @@
 package com.dishes.com;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public  class Dish {
 	public Dish(String dishName, String picture, double calories, Double price,
 			String discription, int rate, int dishId, String res) {
@@ -13,6 +16,7 @@ public  class Dish {
 		this.dishId = dishId;
 		this.res = res;
 	}
+
 	private String  dishName;
 	private String  picture;
 	private double  calories;
@@ -21,6 +25,8 @@ public  class Dish {
 	private int rating;
 	private int dishId;
 	private String res;
+	
+	
 	/**
 	 * @return the dishName
 	 */

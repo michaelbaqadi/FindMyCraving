@@ -84,8 +84,6 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 		    toast.show();
 		} else {
 			login(email, password);
-			Intent intent = new Intent(this, DisplayDishesActivity.class);
-			startActivity(intent);
 		}
 	}
 	public void login(String userEmail, String userPassword){
@@ -141,6 +139,9 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
         	Toast toast = Toast.makeText(context, text, duration);
         	toast.show();
         	// Create user object
+        	
+        	Intent intent = new Intent(this, DisplayDishesActivity.class);
+			startActivity(intent);
         	
 		}
 		else {
