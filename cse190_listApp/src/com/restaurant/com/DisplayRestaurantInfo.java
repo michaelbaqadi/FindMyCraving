@@ -1,5 +1,11 @@
 package com.restaurant.com;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +18,8 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -31,7 +40,8 @@ import com.backendWebService.DownloadWebpageTask;
 import com.example.cse190_listapp.R;
 
 public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
-	 
+	private static final String HTML_FORMAT = "<html><body style=\"text-align: center; background-color: black; vertical-align: center;\"><img src = \"%s\" /></body></html>";
+	String imgUrl = " ";
 	private static final String _getresInfo 
 			= "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
 	DownloadWebpageTask webtask;
@@ -52,6 +62,8 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
     	line1.setText("Michael");
 		
 	}
+
+
 	public void initiateDataConnection(String url, List<NameValuePair> params ){
     	TextView line1 = (TextView)findViewById(R.id.line1); 
     	line1.setText("Michael");
@@ -106,8 +118,8 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			 restaurantStreet1 = jsonObject.getString("restaurantStreet1");
 			 restaurantStreet2 = jsonObject.getString("restaurantStreet2");
 			 restaurantCity = jsonObject.getString("restaurantCity");
-			 restaurantState = jsonObject.getString("restaurantName");
-			 restaurantZip = jsonObject.getString("restaurantState");
+			 restaurantState = jsonObject.getString("restaurantState");
+			 restaurantZip = jsonObject.getString("restaurantZip");
 			 restaurantPhone = jsonObject.getString("restaurantPhone");
 			 restaurantEmail = jsonObject.getString("restaurantEmail");
 			 restaurantURL = jsonObject.getString("restaurantURL");
@@ -149,8 +161,17 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			line10.setText ("Category: " + restaurantCategory);
 			line11.setText("Average Price: " + restaurantAvgPriceRating);
 			line12.setText("Opening Hours: " + restaurantTimestamp);
-
+			
+			final String HTML_FORMAT = 
+						"<html><body style=\"text-align: center; background-color: black; vertical-align: center;\"><img src = \"%s\" /></body></html>";
+			WebView mWebView = null;
+			mWebView = (WebView) findViewById(R.id.restaurantpicture);
+			imgUrl  ="http://tineye.com/images/widgets/mona.jpg";
+		    final String html = String.format(HTML_FORMAT, imgUrl);
+		    
+		    mWebView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+		    mWebView.getSettings().setUseWideViewPort(false); 
     }
 		
-	
 }
+
