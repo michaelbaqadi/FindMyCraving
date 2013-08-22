@@ -54,13 +54,13 @@ public class DishDetailsActivity extends Activity {
 	/** Called when the user clicks the Menu button */
 	public void menuClick(View view) {
 				
-		Intent intent = new Intent(this, RestaurantMenuActivity.class);
+		Intent intent = new Intent(this, RestaurantMenuActivity.class).putExtra("restaurantID", selectedDish.getRestaurantID());
 		startActivity(intent);
 	}
 	
 	public void goToRestaurantInfoPage(View view)
 	{
-		Intent intent = new Intent(this, DisplayRestaurantInfo.class);
+		Intent intent = new Intent(this, DisplayRestaurantInfo.class).putExtra("restaurantID", selectedDish.getRestaurantID());
 		startActivity(intent);
 	}
 
