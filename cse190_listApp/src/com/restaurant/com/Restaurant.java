@@ -1,5 +1,5 @@
 package com.restaurant.com;
-import com.dishes.com.*;
+//import com.dishes.com.*;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class Restaurant extends Place {
 	public Restaurant(String id, String icon, String name, String vicinity,
 			Double latitude, Double longitude, Double distance, String r_name,
 			String hours, String phoneNumber, String address, String category,
-			String averagePrice, String date, String url, List<Dish> dishes) {
+			String averagePrice, String date, String url) {
 		super(id, icon, name, vicinity, latitude, longitude);
 		this.r_name = r_name;
 		this.hours = hours;
@@ -20,7 +20,7 @@ public class Restaurant extends Place {
 		this.averagePrice = averagePrice;
 		this.date = date;
 		this.url = url;
-		this.dishes = dishes;
+		
 	}
 	public Restaurant( String r_nameString,
 			String hoursString, String phoneNumberString, String addressString,
@@ -44,7 +44,7 @@ public class Restaurant extends Place {
 	private String averagePrice;
 	private String date;
 	private String url; 
-	private List<Dish> dishes;
+
 	
 	public String getR_name() {
 		return r_name;
@@ -93,11 +93,5 @@ public class Restaurant extends Place {
 	}
 	public void setUrl(String url) {
 		this.url = url;
-	}
-	public List<Dish> getDishes() {
-		return dishes;
-	}
-	public void setDishes(List<Dish> dishes) {
-		this.dishes = dishes;
 	}
 }
