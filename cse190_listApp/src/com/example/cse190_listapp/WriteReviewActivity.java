@@ -5,15 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class WriteReviewActivity extends Activity {
 
+	private Dish selectedDish = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.write_review);
+		
+		selectedDish = getIntent().getExtras().getParcelable("currDish");
+		TextView dishName = (TextView) findViewById(R.id.dish_name);
+		dishName.setText(selectedDish.getDishName());
 	}
 
 	@Override

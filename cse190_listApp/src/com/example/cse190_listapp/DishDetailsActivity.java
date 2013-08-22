@@ -8,14 +8,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class DishDetailsActivity extends Activity {
+	private Dish selectedDish = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dish_details);
-		}
+		
+		selectedDish = getIntent().getExtras().getParcelable("currDish");
+		TextView dishName = (TextView) findViewById(R.id.dish_name);
+		dishName.setText(selectedDish.getDishName());
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,7 +47,7 @@ public class DishDetailsActivity extends Activity {
 	/** Called when the user clicks the Write Review button */
 	public void writeReviewClick(View view) {
 				
-		Intent intent = new Intent(this, WriteReviewActivity.class);
+		Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);;
 		startActivity(intent);
 	}
 	
@@ -51,6 +57,7 @@ public class DishDetailsActivity extends Activity {
 		Intent intent = new Intent(this, RestaurantMenuActivity.class);
 		startActivity(intent);
 	}
+	
 	public void goToRestaurantInfoPage(View view)
 	{
 		Intent intent = new Intent(this, DisplayRestaurantInfo.class);

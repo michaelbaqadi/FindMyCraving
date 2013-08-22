@@ -58,7 +58,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		ListView lv = (ListView) findViewById(R.id.dishlistview);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
-                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
+                	Dish selectedDish = dish.get(position);
+                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class).putExtra("currDish",selectedDish);
             		startActivity(intent);
                 }
             });
