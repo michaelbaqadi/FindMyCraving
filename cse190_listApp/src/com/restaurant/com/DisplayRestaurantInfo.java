@@ -48,11 +48,13 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			
 		
 		initiateDataConnection(_getresInfo, params);
-		 
+    	TextView line1 = (TextView)findViewById(R.id.line1); 
+    	line1.setText("Michael");
 		
 	}
 	public void initiateDataConnection(String url, List<NameValuePair> params ){
-		
+    	TextView line1 = (TextView)findViewById(R.id.line1); 
+    	line1.setText("Michael");
         ConnectivityManager connMgr = (ConnectivityManager) 
             getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -60,6 +62,8 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
         	webtask.setParams(params);
         	webtask.execute(url);   
         } else {
+        	TextView line2 = (TextView)findViewById(R.id.line1); 
+        	line1.setText("Michael");
         	//Create a toast popup
         	Context context = getApplicationContext();
         	CharSequence text = "No network connection available.";
@@ -145,10 +149,6 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			line10.setText ("Category: " + restaurantCategory);
 			line11.setText("Average Price: " + restaurantAvgPriceRating);
 			line12.setText("Opening Hours: " + restaurantTimestamp);
-		 
-
-		 
-
 
     }
 		
