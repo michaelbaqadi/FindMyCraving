@@ -1,6 +1,5 @@
 package com.example.cse190_listapp;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +12,9 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,111 +30,43 @@ import android.widget.Toast;
 import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
 
-public class DisplayDishesActivity extends Activity implements AsyncResponse {
+public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 	List<Dish>  dish = new  ArrayList<Dish>();
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
-	double longitude;
-	double latitude;
 	static int counter = 0;
 	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDish.php";
 	private static final String _getDishCaloriesURL = "https://www.cakesbyannonline.com/cse190/sql_getDishCalories.php";
 	private static final String _getDishPriceURL = "https://www.cakesbyannonline.com/cse190/sql_getDishPrice.php";
 	private static int numReturns = 0;
-	
-	private LocationManager lm;
-	
-	private final LocationListener locationListener = new LocationListener() {
-	    
-		public void onLocationChanged(Location location) {
-	        longitude = location.getLongitude();
-	        latitude = location.getLatitude();
-	        Context context = getApplicationContext();
-	    	CharSequence text = new StringBuilder().append(latitude).toString() + new StringBuilder().append(longitude).toString();
-	    	int duration = Toast.LENGTH_SHORT;
-	    	Toast toast = Toast.makeText(context, text, duration);
-	    	toast.show();
-	        
-	    }
-
-		@Override
-		public void onProviderDisabled(String arg0) {
-			// TODO Auto-generated method stub
-			lm.removeUpdates(locationListener);
-			Context context = getApplicationContext();
-	    	CharSequence text = "GPS Unavailable";
-	    	int duration = Toast.LENGTH_SHORT;
-	    	Toast toast = Toast.makeText(context, text, duration);
-	    	toast.show();
-			
-		}
-
-		@Override
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-			Context context = getApplicationContext();
-	    	CharSequence text = "GPS Enabled";
-	    	int duration = Toast.LENGTH_SHORT;
-	    	Toast toast = Toast.makeText(context, text, duration);
-	    	toast.show();
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-			
-		}
-
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mainpage);
-		/************** GPS ****************/
-		lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		DecimalFormat df = new DecimalFormat("###.######");
-		longitude =  Double.parseDouble(df.format(location.getLongitude()));
-		latitude = Double.parseDouble(df.format(location.getLatitude()));
-		
-		Context context = getApplicationContext();
-    	CharSequence text = new StringBuilder().append(latitude).toString();
-    	int duration = Toast.LENGTH_SHORT;
-    	Toast toast = Toast.makeText(context, text, duration);
-    	toast.show();
-		
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-		
-		/************** DATA REQUESTS **************/
+		setContentView(R.layout.displayrestaurantmenu);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
-        params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
+        params.add(new BasicNameValuePair("lat", "1"));
+        params.add(new BasicNameValuePair("long", "1"));
         
+	 
+		params.add(new BasicNameValuePair
+				("restID", getIntent().getExtras().getString("restaurantID")));
+		
 		initiateDataConnection(_getDishURL, params);
 		initiateDataConnection(_getDishCaloriesURL, params);
 		initiateDataConnection(_getDishPriceURL, params);
 		
 		
 		//when you click a dish, go to dish details page
-		ListView lv = (ListView) findViewById(R.id.dishlistview);
+		ListView lv = (ListView) findViewById(R.id.dishlistview6);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
                 	Dish selectedDish = dish.get(position);
-                	//TextView dishPrice = (TextView) findViewById(R.id.dishPrice1);
-                	//String dishPrices = (String) dishPrice.getText();
-                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
-                	intent.putExtra("currDish", selectedDish);
-                	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) selectedDish.prices);
-                	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) selectedDish.calories);
-                	//intent.putExtra("prices", dishPrices);
+                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class).putExtra("currDish",selectedDish);
             		startActivity(intent);
                 }
             });
 	}
-
 	public void initiateDataConnection(String url, List<NameValuePair> params ){
         ConnectivityManager connMgr = (ConnectivityManager) 
             getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -282,7 +209,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	}
 	private void populateListView() {
 		ArrayAdapter<Dish> adapter = new MyListAdapter(); 
-		ListView list = (ListView)findViewById(R.id.dishlistview);
+		ListView list = (ListView)findViewById(R.id.dishlistview6);
 		list.setAdapter(adapter);
 		
 	}
@@ -290,7 +217,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	{
 
 		public MyListAdapter() {
-			super(DisplayDishesActivity.this, R.layout.mainpage,dish);
+			super(DisplayRestaurantMenu.this, R.layout.displayrestaurantmenu,dish);
 			
 		} 
 		@Override
@@ -334,7 +261,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			dishCalories.setText("Calories: " + caloriesString);
 			
 			TextView restaurantName = (TextView) itemview.findViewById(R.id.restaurantname3);
-			restaurantName.setText("Restaurant: " + d.getRestaurantName());
+			restaurantName.setText(" ");
 			
 			RatingBar ratingBar = (RatingBar) itemview.findViewById(R.id.rating2);
 			ratingBar.setRating(d.getRating());

@@ -174,4 +174,3 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
     }
 		
 }
-

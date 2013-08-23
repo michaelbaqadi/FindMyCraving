@@ -3,10 +3,12 @@ package com.example.cse190_listapp;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class Dish {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public  class Dish implements Parcelable{
 	
 	private String  dishName;
-	private String  price;
 	private String description;
 	private float rating;
 	private String dishId;
@@ -47,6 +49,11 @@ public  class Dish {
 		this.prices = new ArrayList<DishPrice>();
 		this.calories = new ArrayList<DishCalories>();
 	}
+	
+	//for parcelable
+	public Dish(Parcel in ) {
+        readFromParcel( in );
+    }
 
 	public List<DishPrice> getPrices() {
 		return prices;
@@ -230,19 +237,6 @@ public  class Dish {
 	}
 
 	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-	/**
-	 * @return the price
-	 */
-	public String getPrice() {
-		return price;
-	}
-	/**
 	 * @return the description
 	 */
 	public String getDiscription() {
@@ -283,4 +277,58 @@ public  class Dish {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private void readFromParcel(Parcel in) {
+		dishName = in.readString();
+		description = in.readString();
+		rating = in.readFloat();
+		dishId = in.readString();
+		pictureSm = in.readString();
+		pictureLrg = in.readString();
+		restaurantID = in.readString();
+		restaurantName = in.readString();
+		restaurantPhone = in.readString();
+		restaurantStreet1 = in.readString();
+		restaurantStreet2 = in.readString();
+		restaurantCity = in.readString();
+		restaurantState = in.readString();
+		restaurantZip = in.readString();
+		restaurantURL = in.readString();
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//hello
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(dishName);
+        dest.writeString(description);
+        dest.writeFloat(rating);
+        dest.writeString(dishId);
+        dest.writeString(pictureSm);
+        dest.writeString(pictureLrg);
+        dest.writeString(restaurantID);
+        dest.writeString(restaurantName);
+        dest.writeString(restaurantPhone);
+        dest.writeString(restaurantStreet1);
+        dest.writeString(restaurantStreet2);
+        dest.writeString(restaurantCity);
+        dest.writeString(restaurantState);
+        dest.writeString(restaurantZip);
+        dest.writeString(restaurantURL);
+	}
+	
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Dish createFromParcel(Parcel in ) {
+            return new Dish( in );
+        }
+
+        public Dish[] newArray(int size) {
+            return new Dish[size];
+        }
+    };
 }
