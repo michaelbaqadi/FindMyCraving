@@ -1,6 +1,9 @@
 package com.example.cse190_listapp;
 
-public class DishCalories {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class DishCalories implements Parcelable{
 	String dishID;
 	String calories;
 	String portionSize;
@@ -10,6 +13,11 @@ public class DishCalories {
 		this.calories = cal;
 		this.portionSize = portion;
 	}
+	
+	//for parcelable
+	public DishCalories(Parcel in ) {
+        readFromParcel( in );
+    }
 
 	public String getDishID() {
 		return dishID;
@@ -34,4 +42,35 @@ public class DishCalories {
 	public void setPortionSize(String portionSize) {
 		this.portionSize = portionSize;
 	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeString(dishID);
+        dest.writeString(calories);
+        dest.writeString(portionSize);
+	}
+	
+	private void readFromParcel(Parcel in) {
+		// TODO Auto-generated method stub
+		dishID = in.readString();
+		calories = in.readString();
+		portionSize = in.readString();
+	}
+	
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public DishPrice createFromParcel(Parcel in ) {
+            return new DishPrice( in );
+        }
+
+        public DishPrice[] newArray(int size) {
+            return new DishPrice[size];
+        }
+    };
 }

@@ -65,6 +65,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
                 	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
                 	intent.putExtra("currDish", selectedDish);
                 	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) selectedDish.prices);
+                	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) selectedDish.calories);
                 	//intent.putExtra("prices", dishPrices);
             		startActivity(intent);
                 }

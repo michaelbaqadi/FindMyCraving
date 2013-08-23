@@ -16,9 +16,9 @@ public class DishPrice implements Parcelable{
 	}
 	
 	//for parcelable
-		public DishPrice(Parcel in ) {
-	        readFromParcel( in );
-	    }
+	public DishPrice(Parcel in ) {
+        readFromParcel( in );
+    }
 
 	public String getDishPortion() {
 		return dishPortion;
