@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +60,12 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
                 	Dish selectedDish = dish.get(position);
-                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class).putExtra("currDish",selectedDish);
+                	//TextView dishPrice = (TextView) findViewById(R.id.dishPrice1);
+                	//String dishPrices = (String) dishPrice.getText();
+                	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
+                	intent.putExtra("currDish", selectedDish);
+                	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) selectedDish.prices);
+                	//intent.putExtra("prices", dishPrices);
             		startActivity(intent);
                 }
             });
