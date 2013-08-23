@@ -115,6 +115,15 @@
         android:layout_below="@+id/directions_button"
         android:text="Menu" 
         android:onClick="menuClick"/>
+    
+    <Button
+        android:id="@+id/restaurant_info_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restaurant_address"
+        android:layout_toLeftOf="@id/menu_button"
+        android:text="Restaurant Info" 
+        android:onClick="goToRestaurantInfoPage"/>
 
     <TextView
         android:id="@+id/reviews_text"
