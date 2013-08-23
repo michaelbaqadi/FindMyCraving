@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +34,8 @@ import com.backendWebService.DownloadWebpageTask;
 public class DishDetailsActivity extends Activity implements AsyncResponse {
 	private Dish selectedDish = null;
 	//private String prices = null;
-	ArrayList<DishPrice> prices = null;
-	ArrayList<DishCalories> calories = null;
+	List<DishPrice> prices = new ArrayList<DishPrice>();
+	List<DishCalories> calories = new ArrayList<DishCalories>();
 	List<Review> reviews = new ArrayList<Review>();
 	private final static String _getReviewsURL = "https://www.cakesbyannonline.com/cse190/sql_getReviews.php";
 
@@ -84,7 +85,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		// TODO Auto-generated method stub
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		ArrayAdapter adapter = new ArrayAdapter(this,
-				R.layout.display_review, reviews.toArray()) {
+				R.layout.display_review, reviews) {
 					@Override
 					public View getView(int position, View convertView, ViewGroup parent) {
 					    View row = convertView;
@@ -97,8 +98,8 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 					    
 					    Review currReview = reviews.get(position);
 					    
-					    TextView dateText = (TextView) row.findViewById(R.id.dishname);
-						dateText.setText(currReview.getTimeStamp().substring(0, 9));
+					    TextView dateText = (TextView) row.findViewById(R.id.date_text);
+						dateText.setText(formatDate(currReview.getTimeStamp()));
 						
 						TextView ratingText = (TextView) row.findViewById(R.id.rating_text);
 						ratingText.setText(currReview.getComments());
@@ -109,6 +110,14 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 					    return row; //the row that ListView draws
 					}
 				};
+				
+				ListView reviewsList = (ListView)findViewById(R.id.reviews_list);
+				reviewsList.setAdapter(adapter);
+	}
+
+	protected String formatDate(String timeStamp) {
+		// TODO Auto-generated method stub
+		return timeStamp.substring(5, 10) +  "-" + timeStamp.substring(0, 4);
 	}
 
 	private void populateReviewList(String rawJSON) {
@@ -192,7 +201,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		for(int i = 0; i < prices.size(); i++){
 			//DishPrice price = prices.get(i);
 			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
-			priceString += (prices.get(i).getDishPortion() + ": " /*+ prices.get(i).getDishPrice() + " "*/);
+			priceString = (prices.get(i).getDishPortion() + ": " /*+ prices.get(i).getDishPrice() + " "*/);
 		}
 		return priceString;
 	}
