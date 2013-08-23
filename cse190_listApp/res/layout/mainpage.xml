@@ -8,24 +8,32 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal" >
-    <AutoCompleteTextView
+    
+    <EditText
         android:id="@+id/autoCompleteTextView1"
-        android:layout_width="280dp"
+        android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="Search" >
+        android:hint="Search"
+        android:singleLine="true" 
+        android:imeOptions="actionDone">
 
-        <requestFocus
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </AutoCompleteTextView>
+    </EditText>
     <Button
-	        android:id="@+id/button1"
-	        android:layout_width="wrap_content"
+	        android:id="@+id/clearSearchBtn"
+	        android:layout_width="50dp"
 	        android:layout_height="wrap_content"
-	        android:text="Search" 
+	        android:text="X" 
+	        android:onClick="clearSearch"
 	        />
+    
+<!--     <Button -->
+<!-- 	        android:id="@+id/button1" -->
+<!-- 	        android:layout_width="wrap_content" -->
+<!-- 	        android:layout_height="wrap_content" -->
+<!-- 	        android:text="Search"  -->
+<!-- 	        android:onClick="executeSearch" -->
+<!-- 	        /> -->
     </LinearLayout>
 
 	<RelativeLayout 

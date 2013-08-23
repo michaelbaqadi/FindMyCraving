@@ -21,15 +21,21 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.backendWebService.AsyncResponse;
@@ -46,6 +52,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	private static final String _getDishCaloriesURL = "https://www.cakesbyannonline.com/cse190/sql_getDishCalories.php";
 	private static final String _getDishPriceURL = "https://www.cakesbyannonline.com/cse190/sql_getDishPrice.php";
 	private static int numReturns = 0;
+	private int searchClick = 0;
+	ArrayAdapter<Dish> adapter;
 	
 	private LocationManager lm;
 	
@@ -54,12 +62,13 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		public void onLocationChanged(Location location) {
 	        longitude = location.getLongitude();
 	        latitude = location.getLatitude();
+	        /*
 	        Context context = getApplicationContext();
 	    	CharSequence text = new StringBuilder().append(latitude).toString() + new StringBuilder().append(longitude).toString();
 	    	int duration = Toast.LENGTH_SHORT;
 	    	Toast toast = Toast.makeText(context, text, duration);
 	    	toast.show();
-	        
+	        */
 	    }
 
 		@Override
@@ -93,6 +102,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		}
 	};
 	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -103,14 +114,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		DecimalFormat df = new DecimalFormat("###.######");
 		longitude =  Double.parseDouble(df.format(location.getLongitude()));
-		latitude = Double.parseDouble(df.format(location.getLatitude()));
-		
-		Context context = getApplicationContext();
-    	CharSequence text = new StringBuilder().append(latitude).toString();
-    	int duration = Toast.LENGTH_SHORT;
-    	Toast toast = Toast.makeText(context, text, duration);
-    	toast.show();
-		
+		latitude = Double.parseDouble(df.format(location.getLatitude()));		
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
 		
 		/************** DATA REQUESTS **************/
@@ -118,10 +122,54 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
         params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
         params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
         
-		initiateDataConnection(_getDishURL, params);
-		initiateDataConnection(_getDishCaloriesURL, params);
-		initiateDataConnection(_getDishPriceURL, params);
+		getDishData(params);	
 		
+		EditText search = (EditText)findViewById(R.id.autoCompleteTextView1);
+		search.setOnEditorActionListener(new OnEditorActionListener() {
+		    @Override
+		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+		        	
+		        	
+		        	//Hid the keyboard after hitting search
+		    		InputMethodManager inputManager = (InputMethodManager)
+		                    getSystemService(Context.INPUT_METHOD_SERVICE); 
+
+		    		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+		                       InputMethodManager.HIDE_NOT_ALWAYS);
+		    		
+		    		
+		    		EditText search = (EditText)findViewById(R.id.autoCompleteTextView1);
+		    		
+		    		// Create paramters for the data request
+		    		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		            params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
+		            params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
+		            params.add(new BasicNameValuePair("searchTerm", search.getText().toString()));
+		            
+		            //Empty Dish, prices, calories for new data
+		            dish.removeAll(dish);
+		        	prices.removeAll(prices);
+		        	calories.removeAll(calories);
+		        	
+		        	// Get the dish data
+		        	getDishData(params);
+		    		searchClick = 1;			        	
+		        	
+		        	
+		        	Context context = getApplicationContext();
+			    	CharSequence text = "Done Button Hit";
+			    	int duration = Toast.LENGTH_SHORT;
+			    	Toast toast = Toast.makeText(context, text, duration);
+			    	toast.show();
+		        	
+		            return true;
+		        }
+		        else {
+		            return false;
+		        }
+		    }
+		});
 		
 		//when you click a dish, go to dish details page
 		ListView lv = (ListView) findViewById(R.id.dishlistview);
@@ -139,7 +187,30 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
                 }
             });
 	}
-
+	
+	public void clearSearch(View view){
+	
+		EditText search = (EditText)findViewById(R.id.autoCompleteTextView1);
+		search.setText("");
+		search.requestFocus();
+		//Empty Dish, prices, calories for new data
+        dish.removeAll(dish);
+    	prices.removeAll(prices);
+    	calories.removeAll(calories);
+    	
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
+        params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
+        
+    	getDishData(params);
+	}
+	
+	private void getDishData(List<NameValuePair> params){
+		initiateDataConnection(_getDishURL, params);
+		initiateDataConnection(_getDishCaloriesURL, params);
+		initiateDataConnection(_getDishPriceURL, params);
+	}
+	
 	public void initiateDataConnection(String url, List<NameValuePair> params ){
         ConnectivityManager connMgr = (ConnectivityManager) 
             getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -161,19 +232,24 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	public void processFinish(String result){
 		populateDishList(result);
 		if(numReturns >=3){
-			populateDishesWithPrices();
-			populateDishesWithCalories();
-			Log.d("numReturns: ", new StringBuilder(numReturns).toString());
-			populateListView();
+			//populateDishesWithPrices();
+			//populateDishesWithCalories();
+			if(searchClick == 0){
+				populateListView();
+			} else {	
+				ArrayAdapter<Dish> adapter = new MyListAdapter();
+				ListView list = (ListView)findViewById(R.id.dishlistview);
+				list.setAdapter(adapter);
+				//list.requestFocus();
+				adapter.notifyDataSetChanged();
+			}
 			numReturns = 0;
-			
 		}
-	     // Parse JSON String
-	     // Create Objects
-	    // Populate views, etc
 	}
+	
 	//Populates dish List, price List, and Calories List
 	private void populateDishList(String rawJSON) {
+		
 		if(rawJSON.contains(new StringBuffer("dishName"))){
 			JSONArray jArry = null;
 			try {
@@ -234,6 +310,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 				Log.v("status:", "Left Json Parser");
 			}
 			numReturns++;
+			populateDishesWithCalories();
 
 		} else if(rawJSON.contains(new StringBuffer("dishPriceDishID"))){
 			JSONArray jArry = null;
@@ -259,6 +336,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 				Log.v("status:", "Left Json Parser");
 			}
 			numReturns++;
+			populateDishesWithPrices();
 		}
 	}
 	private void populateDishesWithPrices(){
@@ -280,10 +358,13 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			}
 		}
 	}
-	private void populateListView() {
-		ArrayAdapter<Dish> adapter = new MyListAdapter(); 
-		ListView list = (ListView)findViewById(R.id.dishlistview);
-		list.setAdapter(adapter);
+	private void populateListView() { 
+				
+			ArrayAdapter<Dish> adapter = new MyListAdapter();
+			ListView list = (ListView)findViewById(R.id.dishlistview);
+			list.setAdapter(adapter);
+			//list.requestFocus();
+		
 		
 	}
 	public class MyListAdapter extends ArrayAdapter<Dish>
