@@ -14,9 +14,11 @@ import com.backendWebService.DownloadWebpageTask;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -138,6 +140,11 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
         	int duration = Toast.LENGTH_SHORT;
         	Toast toast = Toast.makeText(context, text, duration);
         	toast.show();
+        	
+        	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+			  SharedPreferences.Editor editor = preferences.edit();
+			  editor.putString("isLoggedIn", "true");
+			  editor.commit();
         	// Create user object
         	
         	Intent intent = new Intent(this, DisplayDishesActivity.class);

@@ -10,9 +10,11 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -140,7 +142,7 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 		
 		try {
 			status = json.getString("status");
-			Log.v("status", status);
+			Log.d("status", status);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,8 +160,32 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 			// should move to the main activity at this point
 			// putting in toast for now
 			//Create a toast popup
+			String userID = "";
+			try {
+				userID = json.getString("userID");
+				Log.d("status", status);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			userEmailInput = (EditText) findViewById(R.id.email2);
+			userNameInput = (EditText) findViewById(R.id.userNameInput);
+			userPassword1 = (EditText) findViewById(R.id.password1Input);
+			
+			String userEmail = userEmailInput.getText().toString().trim();
+			String userName = userNameInput.getText().toString().trim();
+			String userPassword = userPassword1.getText().toString().trim();
+			
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+			  SharedPreferences.Editor editor = preferences.edit();
+			  editor.putString("userName",userName);
+			  editor.putString("userEmail",userEmail);
+			  editor.putString("userPassword",userPassword);
+			  editor.putString("userID",userID);
+			  editor.commit();
+			 		
         	Context context = getApplicationContext();
-        	CharSequence text = "User Added";
+        	CharSequence text = "user added";
         	int duration = Toast.LENGTH_SHORT;
         	Toast toast = Toast.makeText(context, text, duration);
         	toast.show();	
