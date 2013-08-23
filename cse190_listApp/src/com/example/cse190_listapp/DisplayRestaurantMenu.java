@@ -50,7 +50,7 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
         
 	 
 		params.add(new BasicNameValuePair
-				("restaurantID", getIntent().getExtras().getString("restaurantID")));
+				("restID", getIntent().getExtras().getString("restaurantID")));
 		
 		initiateDataConnection(_getDishURL, params);
 		initiateDataConnection(_getDishCaloriesURL, params);
