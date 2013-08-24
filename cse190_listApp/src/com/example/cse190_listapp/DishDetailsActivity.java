@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +35,6 @@ import com.backendWebService.DownloadWebpageTask;
 //hello
 public class DishDetailsActivity extends Activity implements AsyncResponse {
 	private Dish selectedDish = null;
-	//private String prices = null;
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
 	List<Review> reviews = new ArrayList<Review>();
@@ -48,11 +48,6 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		selectedDish = getIntent().getExtras().getParcelable("currDish");
 		prices = getIntent().getExtras().getParcelableArrayList("prices");
 		calories = getIntent().getExtras().getParcelableArrayList("calories");
-		//Log.d("prices", prices.toString());
-		
-		int duration = Toast.LENGTH_SHORT;
-    	Toast toast = Toast.makeText(getApplicationContext(), "Prices size: " + prices.size(), duration);
-    	toast.show();
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
@@ -195,9 +190,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		// TODO Auto-generated method stub
 		String caloriesString = "Calories: ";
 		for(int i = 0; i < calories.size(); i++){
-			//DishPrice price = prices.get(i);
-			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
-			caloriesString += calories.get(i).getPortionSize() + ": " + calories.get(i).getCalories() + " ";
+			caloriesString += /*calories.get(i).getPortionSize() + ": " +*/ calories.get(i).getCalories() + " ";
 		}
 		return caloriesString;
 	}
@@ -205,9 +198,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	private String getPricesString() {
 		String priceString = "Price: ";
 		for(int i = 0; i < prices.size(); i++){
-			//DishPrice price = prices.get(i);
-			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
-			priceString += (/*prices.get(i).getDishPortion() + ": " +*/ prices.get(i).getDishPrice() + " ");
+			priceString += /*prices.get(i).getDishPortion() + ": " +*/ prices.get(i).getDishPrice() + " ";
 		}
 		return priceString;
 	}
@@ -237,6 +228,8 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	public void writeReviewClick(View view) {
 				
 		Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
+		intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) prices);
+    	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) calories);
 		startActivity(intent);
 	}
 	

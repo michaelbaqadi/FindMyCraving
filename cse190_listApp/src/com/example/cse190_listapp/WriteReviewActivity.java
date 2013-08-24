@@ -21,6 +21,8 @@ import android.widget.Toast;
 public class WriteReviewActivity extends Activity {
 
 	private Dish selectedDish = null;
+	List<DishPrice> prices = new ArrayList<DishPrice>();
+	List<DishCalories> calories = new ArrayList<DishCalories>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,14 @@ public class WriteReviewActivity extends Activity {
 		setContentView(R.layout.write_review);
 		
 		selectedDish = getIntent().getExtras().getParcelable("currDish");
+		prices = getIntent().getExtras().getParcelableArrayList("prices");
+		calories = getIntent().getExtras().getParcelableArrayList("calories");
 		TextView dishName = (TextView) findViewById(R.id.dish_name);
 		dishName.setText(selectedDish.getDishName());
+		
+		int duration = Toast.LENGTH_SHORT;
+    	Toast toast = Toast.makeText(getApplicationContext(), "Prices size: " + prices, duration);
+    	toast.show();
 	}
 
 	@Override
@@ -67,11 +75,8 @@ public class WriteReviewActivity extends Activity {
 	    	
 	    	Intent intent = new Intent(context, DishDetailsActivity.class);
 	    	intent.putExtra("currDish",selectedDish);
-	    	int duration2 = Toast.LENGTH_SHORT;
-	    	Toast toast2 = Toast.makeText(context, selectedDish.getDishName(), duration2);
-	    	toast2.show();
-	    	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) selectedDish.getPrices());
-        	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) selectedDish.getCalories());
+	    	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) prices);
+        	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) calories);
 			startActivity(intent);
 			
 		}
