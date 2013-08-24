@@ -47,11 +47,10 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	List<DishCalories> calories = new ArrayList<DishCalories>();
 	double longitude;
 	double latitude;
-	static int counter = 0;
-	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDish.php";
-	private static final String _getDishCaloriesURL = "https://www.cakesbyannonline.com/cse190/sql_getDishCalories.php";
-	private static final String _getDishPriceURL = "https://www.cakesbyannonline.com/cse190/sql_getDishPrice.php";
-	private static int numReturns = 0;
+	//static int counter = 0;
+	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDishTest.php";
+
+	//private static int numReturns = 0;
 	private int searchClick = 0;
 	ArrayAdapter<Dish> adapter;
 	
@@ -207,8 +206,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	
 	private void getDishData(List<NameValuePair> params){
 		initiateDataConnection(_getDishURL, params);
-		initiateDataConnection(_getDishCaloriesURL, params);
-		initiateDataConnection(_getDishPriceURL, params);
+		//initiateDataConnection(_getDishCaloriesURL, params);
+		//initiateDataConnection(_getDishPriceURL, params);
 	}
 	
 	public void initiateDataConnection(String url, List<NameValuePair> params ){
@@ -230,114 +229,91 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
         }
     }
 	public void processFinish(String result){
-		populateDishList(result);
-		if(numReturns >=3){
-			//populateDishesWithPrices();
-			//populateDishesWithCalories();
-			if(searchClick == 0){
-				populateListView();
-			} else {	
-				ArrayAdapter<Dish> adapter = new MyListAdapter();
-				ListView list = (ListView)findViewById(R.id.dishlistview);
-				list.setAdapter(adapter);
-				//list.requestFocus();
-				adapter.notifyDataSetChanged();
+		
+		try {
+			populateDishList(result);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(searchClick == 0){
+			populateListView();
+		} else {	
+			ArrayAdapter<Dish> adapter = new MyListAdapter();
+			ListView list = (ListView)findViewById(R.id.dishlistview);
+			list.setAdapter(adapter);
+			//list.requestFocus();
+			Log.v("status:", "Dish Size " + Integer.toString(dish.size()));
+			//list.setEmptyView(findViewById(R.id.emptyElement));
+			if(dish.size()==0){
+			adapter.clear();
+			} else {
+			adapter.notifyDataSetChanged();
 			}
-			numReturns = 0;
 		}
 	}
 	
 	//Populates dish List, price List, and Calories List
-	private void populateDishList(String rawJSON) {
+	private void populateDishList(String rawJSON) throws JSONException {
 		
-		if(rawJSON.contains(new StringBuffer("dishName"))){
-			JSONArray jArry = null;
-			try {
-				jArry = new JSONArray(rawJSON);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for(int i=0; i<jArry.length(); i++){
-				JSONObject jsonDish = null;
-				try {
-					 jsonDish = jArry.getJSONObject(i);
-					 dish.add(new Dish(jsonDish.getString("dishID"),
-							 jsonDish.getString("dishName"),
-							 jsonDish.getString("dishDescription"),
-							 jsonDish.getDouble("rating"),
-							 jsonDish.getString("dishImageSmURL"),
-							 jsonDish.getString("dishImageLrgURL"),
-							 jsonDish.getString("restaurantID"),
-							 jsonDish.getString("restaurantName"),
-							 jsonDish.getString("restaurantPhone"),
-							 jsonDish.getString("restaurantStreet1"),
-							 jsonDish.getString("restaurantStreet2"),
-							 jsonDish.getString("restaurantCity"),
-							 jsonDish.getString("restaurantState"),
-							 jsonDish.getString("restaurantZip"),
-							 jsonDish.getString("restaurantURL")
-							 ));
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();					
-				}
-				
-			}
-			numReturns++;
-		} else if(rawJSON.contains(new StringBuffer("dishCalorieDishID"))){
-			JSONArray jArry = null;
-			try {
-				jArry = new JSONArray(rawJSON);
-				Log.v("Price Json: ", rawJSON);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for(int i=0; i<jArry.length(); i++){
-				JSONObject jsonDish = new JSONObject();
-				try { 
-					jsonDish = jArry.getJSONObject(i);
-					 String cal = jsonDish.getString("dishCalories");
-					 String dishid = jsonDish.getString("dishCalorieDishID");
-					 String caloriePortion = jsonDish.getString("dishCaloriePortionSize");
-					 calories.add(new DishCalories(dishid, cal, caloriePortion));
-				}catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				Log.v("status:", "Left Json Parser");
-			}
-			numReturns++;
-			populateDishesWithCalories();
-
-		} else if(rawJSON.contains(new StringBuffer("dishPriceDishID"))){
-			JSONArray jArry = null;
-			try {
-				jArry = new JSONArray(rawJSON);
-				Log.v("Price Json: ", rawJSON);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for(int i=0; i<jArry.length(); i++){
-				JSONObject jsonDish = new JSONObject();
-				try { 
-					jsonDish = jArry.getJSONObject(i);
-					 String price = jsonDish.getString("dishPrice");
-					 String dishid = jsonDish.getString("dishPriceDishID");
-					 String dishPortion = jsonDish.getString("dishPricePortionSize");
-					 prices.add(new DishPrice(dishid, price, dishPortion));
-				}catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Log.v("status:", "Left Json Parser");
-			}
-			numReturns++;
-			populateDishesWithPrices();
+		//Get the main JSON Object
+		JSONObject json = null;
+		json = new JSONObject(rawJSON);
+		Log.d("dishJsonConverted: ", "true");
+		
+		//Get each JSON Array to work with (dishes, prices, calories)
+		String dishStr = json.getString("dishes");
+		
+		JSONArray dishJsonArry = new JSONArray(dishStr);
+		
+		String priceStr = json.getString("prices");
+		JSONArray priceJsonArry = new JSONArray(priceStr);
+		
+		String calorieStr = json.getString("calories");
+		JSONArray calorieJsonArry = new JSONArray(calorieStr);
+		
+		// Populate dish, price, calories array lists
+		
+		for(int i=0; i<dishJsonArry.length(); i++){
+			JSONObject jsonDish = dishJsonArry.getJSONObject(i);
+		 dish.add(new Dish(jsonDish.getString("dishID"),
+			 jsonDish.getString("dishName"),
+			 jsonDish.getString("dishDescription"),
+			 jsonDish.getDouble("rating"),
+			 jsonDish.getString("dishImageSmURL"),
+			 jsonDish.getString("dishImageLrgURL"),
+			 jsonDish.getString("restaurantID"),
+			 jsonDish.getString("restaurantName"),
+			 jsonDish.getString("restaurantPhone"),
+			 jsonDish.getString("restaurantStreet1"),
+			 jsonDish.getString("restaurantStreet2"),
+			 jsonDish.getString("restaurantCity"),
+			 jsonDish.getString("restaurantState"),
+			 jsonDish.getString("restaurantZip"),
+			 jsonDish.getString("restaurantURL")
+			 ));
 		}
+		
+		
+		for(int i=0; i<calorieJsonArry.length(); i++){
+			 JSONObject jsonDish = calorieJsonArry.getJSONObject(i);
+			 String cal = jsonDish.getString("dishCalories");
+			 String dishid = jsonDish.getString("dishCalorieDishID");
+			 String caloriePortion = jsonDish.getString("dishCaloriePortionSize");
+			 calories.add(new DishCalories(dishid, cal, caloriePortion));
+		}
+		
+		for(int i=0; i<priceJsonArry.length(); i++){
+		 	 JSONObject jsonDish = priceJsonArry.getJSONObject(i);
+			 String price = jsonDish.getString("dishPrice");
+			 String dishid = jsonDish.getString("dishPriceDishID");
+			 String dishPortion = jsonDish.getString("dishPricePortionSize");
+			 prices.add(new DishPrice(dishid, price, dishPortion));
+		}
+		
+		populateDishesWithPrices();
+		populateDishesWithCalories();
 	}
 	private void populateDishesWithPrices(){
 		for(int i = 0; i<dish.size(); i++){
@@ -363,6 +339,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			ArrayAdapter<Dish> adapter = new MyListAdapter();
 			ListView list = (ListView)findViewById(R.id.dishlistview);
 			list.setAdapter(adapter);
+			list.setEmptyView(findViewById(R.id.emptyElement));
 			//list.requestFocus();
 		
 		
@@ -377,13 +354,13 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		@Override
 	    public View getView(int position, View convertView, ViewGroup parent)
 		{  	
-			// make sure we have a view to work with
-			View itemview = convertView;
-			if(itemview == null)
-			{
-				itemview = getLayoutInflater().inflate(R.layout.itemview,parent,false);
-			}
-			
+		// make sure we have a view to work with
+		View itemview = convertView;
+		if(itemview == null)
+		{
+			itemview = getLayoutInflater().inflate(R.layout.itemview,parent,false);
+		}
+		
 			Dish d = dish.get(position);
 			//ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
 			//imageview.setImageResource(d.getDishId());
@@ -421,6 +398,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			ratingBar.setRating(d.getRating());
 			
 			return itemview;
+			
 				
 		}
 	}
