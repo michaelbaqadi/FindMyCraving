@@ -370,7 +370,6 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			for(int i = 0; i<prices.size(); i++){
 				if(d.getDishId().equalsIgnoreCase(prices.get(i).getDishID())){
 					priceString += prices.get(i).getDishPortion() + ": " + prices.get(i).getDishPrice() + " ";
-					d.setPrices(prices.get(i).getDishPrice(), prices.get(i).getDishPrice());
 				}
 			}
 			//Create a String of Calories
