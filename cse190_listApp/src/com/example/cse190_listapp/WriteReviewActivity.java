@@ -62,8 +62,10 @@ public class WriteReviewActivity extends Activity {
 		   	int duration = Toast.LENGTH_SHORT;
 	    	Toast toast = Toast.makeText(context, toastMessage, duration);
 	    	toast.show();
+	    	
+	    	
 			
-			Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
+	    	Intent intent = new Intent(context, WriteReviewActivity.class).putExtra("currDish",selectedDish);
 			startActivity(intent);
 			
 		}
@@ -73,6 +75,12 @@ public class WriteReviewActivity extends Activity {
 	    	Toast toast = Toast.makeText(context, "You need to enter a review", duration);
 	    	toast.show();
 		} 
+	}
+	
+	public void moveDataToDishDetailsPage
+		(String userID, String rating, String comments, String DishID,String restID)
+	{
+		Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
 	}
 
 }
