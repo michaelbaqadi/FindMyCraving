@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -64,8 +65,13 @@ public class WriteReviewActivity extends Activity {
 	    	toast.show();
 	    	
 	    	
-			
-	    	Intent intent = new Intent(context, WriteReviewActivity.class).putExtra("currDish",selectedDish);
+	    	Intent intent = new Intent(context, DishDetailsActivity.class);
+	    	intent.putExtra("currDish",selectedDish);
+	    	int duration2 = Toast.LENGTH_SHORT;
+	    	Toast toast2 = Toast.makeText(context, selectedDish.getDishName(), duration2);
+	    	toast2.show();
+	    	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) selectedDish.getPrices());
+        	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) selectedDish.getCalories());
 			startActivity(intent);
 			
 		}
@@ -77,10 +83,4 @@ public class WriteReviewActivity extends Activity {
 		} 
 	}
 	
-	public void moveDataToDishDetailsPage
-		(String userID, String rating, String comments, String DishID,String restID)
-	{
-		Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
-	}
-
 }

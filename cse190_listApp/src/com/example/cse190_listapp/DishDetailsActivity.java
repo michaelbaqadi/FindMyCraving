@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +48,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		selectedDish = getIntent().getExtras().getParcelable("currDish");
 		prices = getIntent().getExtras().getParcelableArrayList("prices");
 		calories = getIntent().getExtras().getParcelableArrayList("calories");
+		//Log.d("prices", prices.toString());
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
@@ -134,7 +136,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 				JSONObject jsonDish = null;
 				try {
 					 jsonDish = jArry.getJSONObject(i);
-					 reviews.add(new Review(jsonDish.getString("ratingUserID"),
+					 reviews.add(0, new Review(jsonDish.getString("ratingUserID"),
 							 jsonDish.getDouble("ratingRating"),
 							 jsonDish.getString("ratingComments"),
 							 jsonDish.getString("ratingTimeStamp"),
@@ -188,7 +190,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	private String getCaloriesString() {
 		// TODO Auto-generated method stub
 		String caloriesString = "Calories: ";
-		for(int i = 0; i < calories.size(); i++){
+		for(int i = 0; i < 0 /*calories.size()*/; i++){
 			//DishPrice price = prices.get(i);
 			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
 			caloriesString += calories.get(i).getPortionSize() + ": " + calories.get(i).getCalories() + " ";
@@ -198,10 +200,10 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 
 	private String getPricesString() {
 		String priceString = "Price: ";
-		for(int i = 0; i < prices.size(); i++){
+		for(int i = 0; i < 0 /*prices.size()*/; i++){
 			//DishPrice price = prices.get(i);
 			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
-			priceString = (prices.get(i).getDishPortion() + ": " /*+ prices.get(i).getDishPrice() + " "*/);
+			priceString += (prices.get(i).getDishPortion() + ": " + prices.get(i).getDishPrice() + " ");
 		}
 		return priceString;
 	}
