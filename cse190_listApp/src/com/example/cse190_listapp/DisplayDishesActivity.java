@@ -329,7 +329,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		for(int i = 0; i<dish.size(); i++){
 			for(int j = 0; j<calories.size(); j++){
 				if(calories.get(j).getDishID().equalsIgnoreCase(dish.get(i).getDishId())){
-					dish.get(i).setPrices(calories.get(j).getCalories(), calories.get(j).getPortionSize());
+					dish.get(i).setCalories(calories.get(j).getCalories(), calories.get(j).getPortionSize());
 				}
 			}
 		}
