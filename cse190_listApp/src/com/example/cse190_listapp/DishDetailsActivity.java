@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -244,6 +245,32 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	{
 		Intent intent = new Intent(this, DisplayRestaurantInfo.class).putExtra("restID", selectedDish.getRestaurantID());
 		startActivity(intent);
+	}
+	
+	
+	/** Called when the user clicks the Call button */
+	public void callClick(View view) {
+				
+		Intent callIntent = new Intent(Intent.ACTION_CALL);
+	    callIntent.setData(Uri.parse("tel:"+selectedDish.getRestaurantPhone()));
+	    startActivity(callIntent);
+	}
+	
+	/** Called when the user clicks the Call button */
+	public void directionsClick(View view) {
+		
+		String address = "";
+		address += selectedDish.getRestaurantStreet1() + "\n";
+		if(!selectedDish.getRestaurantStreet2().equals("")) {
+			address += selectedDish.getRestaurantStreet2() + "\n";
+		}
+		address += selectedDish.getRestaurantCity() + ", ";
+		address += selectedDish.getRestaurantState() + " ";
+		address += selectedDish.getRestaurantZip();
+				
+		Intent directions = new Intent(android.content.Intent.ACTION_VIEW,
+			    Uri.parse("google.navigation:q=" + address));
+		startActivity(directions);
 	}
 
 
