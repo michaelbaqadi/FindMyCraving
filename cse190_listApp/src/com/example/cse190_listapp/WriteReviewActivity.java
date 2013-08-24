@@ -1,10 +1,18 @@
 package com.example.cse190_listapp;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,15 +41,46 @@ public class WriteReviewActivity extends Activity {
 	
 	/** Called when the user clicks the Update button */
 	public void postClick(View view) {
-		
 		Context context = getApplicationContext();
-    	CharSequence text = "Your review was posted!";
-    	int duration = Toast.LENGTH_SHORT;
-    	Toast toast = Toast.makeText(context, text, duration);
-    	toast.show();
+		CharSequence toastMessage = "Your review was posted!";
+	
+		// get the rating value in float here
+		RatingBar mBar = (RatingBar) findViewById(R.id.user_rating);
+		float rating = mBar.getRating();
 		
-		Intent intent = new Intent(this, DishDetailsActivity.class);
-		startActivity(intent);
+		//getting the text from the textbox
+		EditText reviewBox = (EditText) findViewById(R.id.reviewtextbox);
+		if (reviewBox.getText().toString().length() != 0){
+			String textValue = reviewBox.getText().toString();
+			
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("userID", "1"));
+			params.add(new BasicNameValuePair("rating",String.valueOf(rating) ));
+			params.add(new BasicNameValuePair("comments", textValue));
+			params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
+			params.add(new BasicNameValuePair("restID", selectedDish.getRestaurantID()));
+		   	int duration = Toast.LENGTH_SHORT;
+	    	Toast toast = Toast.makeText(context, toastMessage, duration);
+	    	toast.show();
+	    	
+	    	
+			
+	    	Intent intent = new Intent(context, WriteReviewActivity.class).putExtra("currDish",selectedDish);
+			startActivity(intent);
+			
+		}
+		else 
+		{
+		   	int duration = Toast.LENGTH_SHORT;
+	    	Toast toast = Toast.makeText(context, "You need to enter a review", duration);
+	    	toast.show();
+		} 
+	}
+	
+	public void moveDataToDishDetailsPage
+		(String userID, String rating, String comments, String DishID,String restID)
+	{
+		Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
 	}
 
 }

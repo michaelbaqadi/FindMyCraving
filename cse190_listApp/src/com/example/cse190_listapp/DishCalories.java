@@ -65,12 +65,12 @@ public class DishCalories implements Parcelable{
 	}
 	
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public DishPrice createFromParcel(Parcel in ) {
-            return new DishPrice( in );
+        public DishCalories createFromParcel(Parcel in ) {
+            return new DishCalories( in );
         }
 
-        public DishPrice[] newArray(int size) {
-            return new DishPrice[size];
+        public DishCalories[] newArray(int size) {
+            return new DishCalories[size];
         }
     };
 }
