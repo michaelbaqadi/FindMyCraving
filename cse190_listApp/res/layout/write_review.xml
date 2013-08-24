@@ -63,23 +63,22 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.4" >
 
-
 	   <EditText
-	        android:id="@+id/user_review_text"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:minLines="4"
-	        android:ems="10"
-	        android:inputType="textMultiLine" />
-	
+	       android:id="@+id/reviewtextbox"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:ems="10"
+	       android:inputType="textMultiLine"
+	       android:minLines="4" />
+
 	   <Button
 	       android:id="@+id/post_review_button"
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content"
-	       android:layout_below="@id/user_review_text"
 	       android:layout_alignParentRight="true"
-	       android:text="Post" 
-	       android:onClick="postClick"/>
+	       android:layout_below="@+id/reviewtextbox"
+	       android:onClick="postClick"
+	       android:text="Post" />
    
    </RelativeLayout>
 
