@@ -44,6 +44,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 	String imgUrl = " ";
 	private static final String _getresInfo 
 			= "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
+	
 	DownloadWebpageTask webtask;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 		webtask = new DownloadWebpageTask();
 		webtask.delegate = this;
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
        // params.add(new BasicNameValuePair("lat", "1"));
         //params.add(new BasicNameValuePair("long", "1"));
 			
