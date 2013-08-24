@@ -51,20 +51,21 @@ public class WriteReviewActivity extends Activity {
 		//getting the text from the textbox
 		EditText reviewBox = (EditText) findViewById(R.id.reviewtextbox);
 		if (reviewBox.getText().toString().length() != 0){
-			//String textValue = reviewBox.getText().toString();
+			String textValue = reviewBox.getText().toString();
 			
-		/*List<NameValuePair> params = new ArrayList<NameValuePair>();
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("userID", "1"));
 			params.add(new BasicNameValuePair("rating",String.valueOf(rating) ));
 			params.add(new BasicNameValuePair("comments", textValue));
 			params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
-			params.add(new BasicNameValuePair("restID", selectedDish.getRestaurantID()));*
+			params.add(new BasicNameValuePair("restID", selectedDish.getRestaurantID()));
 		   	int duration = Toast.LENGTH_SHORT;
 	    	Toast toast = Toast.makeText(context, toastMessage, duration);
 	    	toast.show();
 			
-			Intent intent = new Intent(this, DishDetailsActivity.class);
-			startActivity(intent);*/
+			Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class);
+			startActivity(intent);
+			
 		}
 		else 
 		{
