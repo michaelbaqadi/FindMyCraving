@@ -50,6 +50,10 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		calories = getIntent().getExtras().getParcelableArrayList("calories");
 		//Log.d("prices", prices.toString());
 		
+		int duration = Toast.LENGTH_SHORT;
+    	Toast toast = Toast.makeText(getApplicationContext(), "Prices size: " + prices.size(), duration);
+    	toast.show();
+		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
         initiateDataConnection(_getReviewsURL, params);
@@ -190,7 +194,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	private String getCaloriesString() {
 		// TODO Auto-generated method stub
 		String caloriesString = "Calories: ";
-		for(int i = 0; i < 0 /*calories.size()*/; i++){
+		for(int i = 0; i < calories.size(); i++){
 			//DishPrice price = prices.get(i);
 			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
 			caloriesString += calories.get(i).getPortionSize() + ": " + calories.get(i).getCalories() + " ";
@@ -200,10 +204,10 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 
 	private String getPricesString() {
 		String priceString = "Price: ";
-		for(int i = 0; i < 0 /*prices.size()*/; i++){
+		for(int i = 0; i < prices.size(); i++){
 			//DishPrice price = prices.get(i);
 			//priceString += price.getDishPortion() + ": " + price.getDishPrice() + " ";
-			priceString += (prices.get(i).getDishPortion() + ": " + prices.get(i).getDishPrice() + " ");
+			priceString += (/*prices.get(i).getDishPortion() + ": " +*/ prices.get(i).getDishPrice() + " ");
 		}
 		return priceString;
 	}
@@ -245,7 +249,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	
 	public void goToRestaurantInfoPage(View view)
 	{
-		Intent intent = new Intent(this, DisplayRestaurantInfo.class).putExtra("restaurantID", selectedDish.getRestaurantID());
+		Intent intent = new Intent(this, DisplayRestaurantInfo.class).putExtra("restID", selectedDish.getRestaurantID());
 		startActivity(intent);
 	}
 
