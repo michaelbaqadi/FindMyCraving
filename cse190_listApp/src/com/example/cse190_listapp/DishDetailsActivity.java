@@ -13,11 +13,13 @@ import com.restaurant.com.DisplayRestaurantInfo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -227,11 +229,19 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	
 	/** Called when the user clicks the Write Review button */
 	public void writeReviewClick(View view) {
-				
-		Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
-		intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) prices);
-    	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) calories);
-		startActivity(intent);
+		 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		 String username = preferences.getString("isLoggedIn", "false");
+		 if(username== "false")
+		 {
+				Intent intent = new Intent(this,FirstLaunchActivity.class);
+				startActivity(intent);
+		 }
+		 else{		
+			Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
+			intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) prices);
+	    	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) calories);
+			startActivity(intent);
+		}			
 	}
 	
 	/** Called when the user clicks the Menu button */
