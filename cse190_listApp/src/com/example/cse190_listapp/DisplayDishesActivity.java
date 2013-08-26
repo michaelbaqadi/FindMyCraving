@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -26,11 +27,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -48,7 +49,9 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	double longitude;
 	double latitude;
 	//static int counter = 0;
+	private static final boolean DEBUG_GPS = true;
 	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDishTest.php";
+	ProgressDialog progress_dialog ;
 
 	//private static int numReturns = 0;
 	private int searchClick = 0;
@@ -100,22 +103,27 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			
 		}
 	};
-	
-	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().show();
+		progress_dialog = new ProgressDialog(DisplayDishesActivity.this);
+	    progress_dialog.setMessage("Loading please wait..");
+	    progress_dialog.setCancelable(true);
+	    progress_dialog.show();
+		
 		setContentView(R.layout.mainpage);
 		/************** GPS ****************/
+		if(DEBUG_GPS){
 		lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		DecimalFormat df = new DecimalFormat("###.######");
 		longitude =  Double.parseDouble(df.format(location.getLongitude()));
 		latitude = Double.parseDouble(df.format(location.getLatitude()));		
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-		
+		}
 		/************** DATA REQUESTS **************/
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
@@ -252,6 +260,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			adapter.notifyDataSetChanged();
 			}
 		}
+		progress_dialog.cancel();
+		
 	}
 	
 	//Populates dish List, price List, and Calories List

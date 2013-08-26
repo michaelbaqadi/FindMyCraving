@@ -7,19 +7,19 @@
  
     <ImageView
         android:id="@+id/dishpicture"
-        android:layout_width="140dp"
-        android:layout_height="100dp"
+        android:layout_width="122dp"
+        android:layout_height="83dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:fillViewport="true"
-        android:maxHeight="100dp"
-        android:maxWidth="140dp"
+        android:maxHeight="83dp"
+        android:maxWidth="250dp"
         android:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="119dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
@@ -27,7 +27,17 @@
             android:layout_width="199dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="DishName" />
+            android:text="DishName" 
+            android:textSize="12dp"
+            android:textStyle="bold"
+            />
+         <TextView
+            android:id="@+id/restaurantname3"
+            android:layout_width="200dp"
+            android:textSize="8dp"
+            android:textColor="#888888"
+            android:layout_height="wrap_content"
+            android:text="RestaurantName" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,6 +47,7 @@
             <TextView
                 android:id="@+id/dishRating2"
                 android:layout_width="199dp"
+                android:textSize="12dp"
                 android:layout_height="wrap_content"
                 android:text="Rating:" />
 
@@ -51,24 +62,20 @@
                 android:numStars="5" />
 
         </RelativeLayout>
-
+		
+		<TextView
+            android:id="@+id/dishPrice1"
+            android:layout_width="199dp"
+            android:textSize="12dp"
+            android:layout_height="wrap_content"
+            android:text="Price: " />
+        
         <TextView
             android:id="@+id/dishCalories2"
             android:layout_width="199dp"
+            android:textSize="12dp"
             android:layout_height="wrap_content"
-            android:text="DishCalories" />
-        
-        <TextView
-            android:id="@+id/dishPrice1"
-            android:layout_width="199dp"
-            android:layout_height="wrap_content"
-            android:text="DishPrice: " />
-
-        <TextView
-            android:id="@+id/restaurantname3"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="RestaurantName" />
+            android:text="Calories: " />
         
     </LinearLayout>
         
