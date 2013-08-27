@@ -247,11 +247,16 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	    		startActivity(intent);
 	            return true;
 	        case R.id.action_log_out:
-	        	//TODO: put log out code here
+	        	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+	        	SharedPreferences.Editor editor = preferences.edit();
+				editor.putString("isLoggedIn", "false");
+				editor.commit();
+				Intent intent2 = new Intent(getApplicationContext(), DisplayDishesActivity.class);
+	    		startActivity(intent2);
 	            return true;
 	        case R.id.action_log_in_sign_up:
-	        	Intent intent2 = new Intent(getApplicationContext(), FirstLaunchActivity.class);
-	    		startActivity(intent2);
+	        	Intent intent3 = new Intent(getApplicationContext(), FirstLaunchActivity.class);
+	    		startActivity(intent3);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
