@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-    </RelativeLayout>
 
     <TextView
         android:id="@+id/username_label"
@@ -22,15 +16,15 @@
         android:layout_marginTop="30dp"
         />
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
+    <EditText
+        android:id="@+id/editProUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" >
-    </AutoCompleteTextView>
+    </EditText>
 
     <TextView
-        android:id="@+id/password_label"
+        android:id="@+id/editProfilePassword_label"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_margin="5dp"
@@ -39,14 +33,14 @@
         android:textSize="14sp" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editProPassword1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/retypepass_label"
+        android:id="@+id/editProRetypePass_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -55,17 +49,15 @@
         android:textSize="14dp" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editProPassword2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" >
-
-        <requestFocus />
     </EditText>
 
     <TextView
-        android:id="@+id/email_label"
+        android:id="@+id/editProEmail_label"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_margin="5dp"
@@ -74,18 +66,11 @@
         android:textSize="14sp" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editProEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress" />
-
-     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-    </RelativeLayout>
 
      <RelativeLayout
          android:layout_width="fill_parent"

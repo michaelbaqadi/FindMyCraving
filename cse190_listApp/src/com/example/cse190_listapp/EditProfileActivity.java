@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 
 
 public class EditProfileActivity extends Activity {
@@ -15,6 +16,10 @@ public class EditProfileActivity extends Activity {
 	String userName;
 	String userPassword;
 	String userEmail;
+	EditText user;
+	EditText password1;
+	EditText password2;
+	EditText email;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,14 @@ public class EditProfileActivity extends Activity {
 		userEmail = prefs.getString("userEmail", "false");
 		
 		if(!userEmail.equalsIgnoreCase("false")){
-			
+			user = (EditText)findViewById(R.id.editProUserName);
+			user.setText(userName);
+			email = (EditText)findViewById(R.id.editProEmail);
+			email.setText(userEmail);
+			password1 = (EditText)findViewById(R.id.editProPassword1);
+			password1.setText(userPassword);
+			password2 = (EditText)findViewById(R.id.editProPassword1);
+			password2.setText(userPassword);
 		}
 		
 		
