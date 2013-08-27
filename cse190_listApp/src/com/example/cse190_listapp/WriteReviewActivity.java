@@ -75,7 +75,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		String username = preferences.getString("isLoggedIn", "false");
-		if(username== "false")
+		if(username.equals("false"))
 		{
 			getMenuInflater().inflate(R.menu.logged_out, menu);
 		}

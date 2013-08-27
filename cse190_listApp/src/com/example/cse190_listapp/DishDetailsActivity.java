@@ -59,7 +59,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		//set the write review button to not clickable if user is not logged in
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		String username = preferences.getString("isLoggedIn", "false");
-		if(username== "false")
+		if(username.equals("false"))
 		{
 			Button writeReview = (Button) findViewById(R.id.write_review_button);
 			writeReview.setBackgroundColor(Color.GRAY);
@@ -227,7 +227,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		String username = preferences.getString("isLoggedIn", "false");
-		if(username== "false")
+		if(username.equals("false"))
 		{
 			getMenuInflater().inflate(R.menu.logged_out, menu);
 		}
@@ -267,10 +267,10 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	public void writeReviewClick(View view) {
 		 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		 String username = preferences.getString("isLoggedIn", "false");
-		 if(username== "false")
+		 if(username.equals("false"))
 		 {
 			Context context = getApplicationContext();
-			CharSequence toastMessage = "Please sign up to write a review";
+			CharSequence toastMessage = "Please log in/sign up to write a review";
 			int duration = Toast.LENGTH_SHORT;
 			Toast toast = Toast.makeText(context, toastMessage, duration);
 			toast.show();
