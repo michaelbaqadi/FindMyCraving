@@ -18,15 +18,21 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,11 +43,14 @@ import android.widget.Toast;
 
 import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
+import com.example.cse190_listapp.DisplayDishesActivity;
+import com.example.cse190_listapp.EditProfileActivity;
+import com.example.cse190_listapp.FirstLaunchActivity;
 import com.example.cse190_listapp.R;
 
 public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 	private static final String HTML_FORMAT = "<html><body style=\"text-align: center; background-color: black; vertical-align: center;\"><img src = \"%s\" /></body></html>";
-	String imgUrl = " ";
+	String imgUrl  = "";
 	private static final String _getresInfo 
 			= "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
 	
@@ -50,19 +59,43 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().show();
 		setContentView(R.layout.restaurantinfo);;
 		webtask = new DownloadWebpageTask();
 		webtask.delegate = this;
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
-       // params.add(new BasicNameValuePair("lat", "1"));
-        //params.add(new BasicNameValuePair("long", "1"));
-			
+        new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
+        .execute(imgUrl);	
 		
 		initiateDataConnection(_getresInfo, params);
-    	TextView line1 = (TextView)findViewById(R.id.line1); 
-    	line1.setText("Michael");
-		
+    	
+	}
+	
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	    ImageView bmImage;
+
+	    public DownloadImageTask(ImageView bmImage) {
+	        this.bmImage = bmImage;
+	    }
+
+	    protected Bitmap doInBackground(String... urls) {
+	        String urldisplay = urls[0];
+	        Bitmap mIcon11 = null;
+	        try {
+	            InputStream in = new java.net.URL(urldisplay).openStream();
+	            mIcon11 = BitmapFactory.decodeStream(in);
+	        } catch (Exception e) {
+	            Log.e("Error", e.getMessage());
+	            e.printStackTrace();
+	        }
+	        return mIcon11;
+	    }
+
+	    protected void onPostExecute(Bitmap result) {
+	        bmImage.setImageBitmap(result);
+	    }
 	}
 
 
@@ -129,7 +162,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			 restaurantAvgPriceRating = jsonObject.getString("restaurantAvgPriceRating");
 			 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
 			 restaurantImageURL = jsonObject.getString("restaurantImageURL");
-			 
+			 restaurantImageURL = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,16 +196,49 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			line10.setText ("Category: " + restaurantCategory);
 			line11.setText("Average Price: " + restaurantAvgPriceRating);
 			line12.setText("Opening Hours: " + restaurantTimestamp);
-			
-			final String HTML_FORMAT = 
-						"<html><body style=\"text-align: center; background-color: black; vertical-align: center;\"><img src = \"%s\" /></body></html>";
-			WebView mWebView = null;
-			mWebView = (WebView) findViewById(R.id.restaurantpicture);
-			imgUrl  ="http://tineye.com/images/widgets/mona.jpg";
-		    final String html = String.format(HTML_FORMAT, imgUrl);
-		    
-		    mWebView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-		    mWebView.getSettings().setUseWideViewPort(false); 
+			new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
+	        .execute(restaurantImageURL);	
     }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String username = preferences.getString("isLoggedIn", "false");
+		if(username== "false")
+		{
+			getMenuInflater().inflate(R.menu.logged_out, menu);
+		}
+		else{		// 
+			getMenuInflater().inflate(R.menu.logged_in, menu);
+		}
+		return true;
+		//setVlauesToTextView(R.id.hello_id,"abcd");
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.action_edit_profile:
+	        	Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+	    		startActivity(intent);
+	            return true;
+	        case R.id.action_log_out:
+	        	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+	        	SharedPreferences.Editor editor = preferences.edit();
+				editor.putString("isLoggedIn", "false");
+				editor.commit();
+				Intent intent2 = new Intent(getApplicationContext(), DisplayDishesActivity.class);
+	    		startActivity(intent2);
+	            return true;
+	        case R.id.action_log_in_sign_up:
+	        	Intent intent3 = new Intent(getApplicationContext(), FirstLaunchActivity.class);
+	    		startActivity(intent3);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 		
 }
