@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,7 @@ import android.widget.Toast;
 
 import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
-
+//hello
 public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 	List<Dish>  dish = new  ArrayList<Dish>();
 	List<DishPrice> prices = new ArrayList<DishPrice>();
@@ -52,6 +53,11 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 		params.add(new BasicNameValuePair
 				("restID", getIntent().getExtras().getString("restaurantID")));
 		
+		//Empty Dish, prices, calories for new data
+        dish.removeAll(dish);
+    	prices.removeAll(prices);
+    	calories.removeAll(calories);
+		
 		initiateDataConnection(_getDishURL, params);
 		initiateDataConnection(_getDishCaloriesURL, params);
 		initiateDataConnection(_getDishPriceURL, params);
@@ -63,6 +69,8 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
                 public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
                 	Dish selectedDish = dish.get(position);
                 	Intent intent = new Intent(getApplicationContext(), DishDetailsActivity.class).putExtra("currDish",selectedDish);
+                	intent.putParcelableArrayListExtra("prices", (ArrayList<? extends Parcelable>) selectedDish.getPrices());
+                	intent.putParcelableArrayListExtra("calories", (ArrayList<? extends Parcelable>) selectedDish.getCalories());
             		startActivity(intent);
                 }
             });
@@ -202,7 +210,7 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 		for(int i = 0; i<dish.size(); i++){
 			for(int j = 0; j<calories.size(); j++){
 				if(calories.get(j).getDishID().equalsIgnoreCase(dish.get(i).getDishId())){
-					dish.get(i).setPrices(calories.get(j).getCalories(), calories.get(j).getPortionSize());
+					dish.get(i).setCalories(calories.get(j).getCalories(), calories.get(j).getPortionSize());
 				}
 			}
 		}
@@ -239,7 +247,7 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 			for(int i = 0; i<prices.size(); i++){
 				if(d.getDishId().equalsIgnoreCase(prices.get(i).getDishID())){
 					priceString += prices.get(i).getDishPortion() + ": " + prices.get(i).getDishPrice() + " ";
-					d.setPrices(prices.get(i).getDishPrice(), prices.get(i).getDishPrice());
+					//d.setPrices(prices.get(i).getDishPrice(), prices.get(i).getDishPrice());
 				}
 			}
 			//Create a String of Calories
