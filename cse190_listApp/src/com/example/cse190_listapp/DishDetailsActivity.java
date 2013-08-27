@@ -225,7 +225,15 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String username = preferences.getString("isLoggedIn", "false");
+		if(username== "false")
+		{
+			getMenuInflater().inflate(R.menu.logged_out, menu);
+		}
+		else{		// 
+			getMenuInflater().inflate(R.menu.logged_in, menu);
+		}
 		return true;
 		//setVlauesToTextView(R.id.hello_id,"abcd");
 	}
@@ -237,6 +245,13 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	        case R.id.action_edit_profile:
 	        	Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
 	    		startActivity(intent);
+	            return true;
+	        case R.id.action_log_out:
+	        	//TODO: put log out code here
+	            return true;
+	        case R.id.action_log_in_sign_up:
+	        	Intent intent2 = new Intent(getApplicationContext(), FirstLaunchActivity.class);
+	    		startActivity(intent2);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

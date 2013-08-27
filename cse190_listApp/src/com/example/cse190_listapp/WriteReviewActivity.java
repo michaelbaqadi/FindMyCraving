@@ -70,7 +70,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.logged_out, menu);
 		return true;
 		// setVlauesToTextView(R.id.hello_id,"abcd");
 	}
