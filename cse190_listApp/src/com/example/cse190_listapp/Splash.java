@@ -31,6 +31,7 @@ public class Splash extends Activity {
 				}
 				finally
 				{
+					finish();
 					SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 					String username = preferences.getString("isLoggedIn", "false");
 					if(username.equals("false"))
