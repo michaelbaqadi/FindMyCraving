@@ -46,8 +46,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	List<Dish>  dish = new  ArrayList<Dish>();
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
-	double longitude;
-	double latitude;
+	double longitude=0;
+	double latitude=0;
 	//static int counter = 0;
 	private static final boolean DEBUG_GPS = true;
 	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDishTest.php";
@@ -64,13 +64,13 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		public void onLocationChanged(Location location) {
 	        longitude = location.getLongitude();
 	        latitude = location.getLatitude();
-	        /*
+	        
 	        Context context = getApplicationContext();
 	    	CharSequence text = new StringBuilder().append(latitude).toString() + new StringBuilder().append(longitude).toString();
 	    	int duration = Toast.LENGTH_SHORT;
 	    	Toast toast = Toast.makeText(context, text, duration);
 	    	toast.show();
-	        */
+	        
 	    }
 
 		@Override
@@ -116,14 +116,22 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		
 		setContentView(R.layout.mainpage);
 		/************** GPS ****************/
-		if(DEBUG_GPS){
+		
 		lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Location loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		DecimalFormat df = new DecimalFormat("###.######");
-		longitude =  Double.parseDouble(df.format(location.getLongitude()));
-		latitude = Double.parseDouble(df.format(location.getLatitude()));		
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-		}
+		
+		 if (loc != null ){
+	            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+	            longitude =  Double.parseDouble(df.format(loc.getLongitude()));
+	    		latitude = Double.parseDouble(df.format(loc.getLatitude()));
+	        }else{
+	        	Toast.makeText(this, "GPS is Disabled in your devide", Toast.LENGTH_SHORT).show();
+	        }
+		
+				
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+		
 		/************** DATA REQUESTS **************/
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
