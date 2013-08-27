@@ -11,13 +11,28 @@ import android.view.Window;
 
 
 public class EditProfileActivity extends Activity {
-
+	// Class Variables
+	String userName;
+	String userPassword;
+	String userEmail;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().show();
 		setContentView(R.layout.editprofile);
+		// Populate content from preferences 
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		userName = prefs.getString("userName", "false");
+		userPassword = prefs.getString("userPassword", "false");
+		userEmail = prefs.getString("userEmail", "false");
+		
+		if(!userEmail.equalsIgnoreCase("false")){
+			
+		}
+		
+		
 	}
 
 	@Override

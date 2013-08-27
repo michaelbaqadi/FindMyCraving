@@ -221,6 +221,7 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 			  editor.putString("userEmail",userEmail);
 			  editor.putString("userPassword",userPassword);
 			  editor.putString("userID",userID);
+			  editor.putString("isLoggedIn", "true");
 			  editor.commit();
 			 		
         	Context context = getApplicationContext();
