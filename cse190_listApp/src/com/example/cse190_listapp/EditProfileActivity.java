@@ -1,17 +1,34 @@
 package com.example.cse190_listapp;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.View;
 
 
 public class EditProfileActivity extends Activity {
-
+	// Class Variables
+	String userName;
+	String userPassword;
+	String userEmail;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.editprofile);
+		// Populate content from preferences 
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		userName = prefs.getString("userName", "false");
+		userPassword = prefs.getString("userPassword", "false");
+		userEmail = prefs.getString("userEmail", "false");
+		
+		if(!userEmail.equalsIgnoreCase("false")){
+			
+		}
+		
+		
 	}
 
 	@Override
