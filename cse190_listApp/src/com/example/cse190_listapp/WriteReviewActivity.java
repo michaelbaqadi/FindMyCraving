@@ -47,10 +47,6 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		TextView dishName = (TextView) findViewById(R.id.dish_name);
 		dishName.setText(selectedDish.getDishName());
 
-		int duration = Toast.LENGTH_SHORT;
-		Toast toast = Toast.makeText(getApplicationContext(), "Prices size: "
-				+ prices, duration);
-		toast.show();
 	}
 
 	public void initiateDataConnection(String url, List<NameValuePair> params) {

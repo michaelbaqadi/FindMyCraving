@@ -88,8 +88,7 @@
         android:layout_alignBaseline="@+id/restaurant_name"
         android:layout_alignBottom="@+id/restaurant_name"
         android:layout_alignParentRight="true"
-        android:text="Call" 
-        android:onClick="callClick"/>
+        android:text="Call" />
 
     <TextView
         android:id="@+id/restaurant_address"
@@ -106,8 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/call_button"
-        android:text="Directions" 
-        android:onClick="directionsClick"/>
+        android:text="Directions" />
 
     <Button
         android:id="@+id/menu_button"
