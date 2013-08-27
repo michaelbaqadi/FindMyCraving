@@ -4,12 +4,16 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <WebView
+    <ImageView
         android:id="@+id/restaurantpicture"
         android:layout_width="match_parent"
-        android:layout_height="176dp"
-        android:layout_weight="0.96"
-        android:src="@drawable/ic_launcher" />
+        android:layout_height="wrap_content"
+        android:layout_weight="0.97"
+        android:background="#FFFFFF"
+        android:adjustViewBounds="true" 
+       	android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        />
 
     <TextView
         android:id="@+id/line1"

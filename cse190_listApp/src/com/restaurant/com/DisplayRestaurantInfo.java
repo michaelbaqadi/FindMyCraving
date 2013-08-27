@@ -22,9 +22,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -41,7 +44,7 @@ import com.example.cse190_listapp.R;
 
 public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 	private static final String HTML_FORMAT = "<html><body style=\"text-align: center; background-color: black; vertical-align: center;\"><img src = \"%s\" /></body></html>";
-	String imgUrl = " ";
+	String imgUrl  = "";
 	private static final String _getresInfo 
 			= "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
 	
@@ -55,14 +58,36 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 		webtask.delegate = this;
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
-       // params.add(new BasicNameValuePair("lat", "1"));
-        //params.add(new BasicNameValuePair("long", "1"));
-			
+        new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
+        .execute(imgUrl);	
 		
 		initiateDataConnection(_getresInfo, params);
-    	TextView line1 = (TextView)findViewById(R.id.line1); 
-    	line1.setText("Michael");
-		
+    	
+	}
+	
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	    ImageView bmImage;
+
+	    public DownloadImageTask(ImageView bmImage) {
+	        this.bmImage = bmImage;
+	    }
+
+	    protected Bitmap doInBackground(String... urls) {
+	        String urldisplay = urls[0];
+	        Bitmap mIcon11 = null;
+	        try {
+	            InputStream in = new java.net.URL(urldisplay).openStream();
+	            mIcon11 = BitmapFactory.decodeStream(in);
+	        } catch (Exception e) {
+	            Log.e("Error", e.getMessage());
+	            e.printStackTrace();
+	        }
+	        return mIcon11;
+	    }
+
+	    protected void onPostExecute(Bitmap result) {
+	        bmImage.setImageBitmap(result);
+	    }
 	}
 
 
@@ -129,7 +154,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			 restaurantAvgPriceRating = jsonObject.getString("restaurantAvgPriceRating");
 			 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
 			 restaurantImageURL = jsonObject.getString("restaurantImageURL");
-			 
+			 restaurantImageURL = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,16 +188,8 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			line10.setText ("Category: " + restaurantCategory);
 			line11.setText("Average Price: " + restaurantAvgPriceRating);
 			line12.setText("Opening Hours: " + restaurantTimestamp);
-			
-			final String HTML_FORMAT = 
-						"<html><body style=\"text-align: center; background-color: black; vertical-align: center;\"><img src = \"%s\" /></body></html>";
-			WebView mWebView = null;
-			mWebView = (WebView) findViewById(R.id.restaurantpicture);
-			imgUrl  ="http://tineye.com/images/widgets/mona.jpg";
-		    final String html = String.format(HTML_FORMAT, imgUrl);
-		    
-		    mWebView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-		    mWebView.getSettings().setUseWideViewPort(false); 
+			new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
+	        .execute(restaurantImageURL);	
     }
 		
 }
