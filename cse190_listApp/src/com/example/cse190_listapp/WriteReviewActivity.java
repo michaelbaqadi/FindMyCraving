@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().show();
 		setContentView(R.layout.write_review);
 
 		webtask = new DownloadWebpageTask();

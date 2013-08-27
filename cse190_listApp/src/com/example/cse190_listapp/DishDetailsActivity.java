@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -46,11 +48,25 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().show();
 		setContentView(R.layout.dish_details);
 		
 		selectedDish = getIntent().getExtras().getParcelable("currDish");
 		prices = getIntent().getExtras().getParcelableArrayList("prices");
 		calories = getIntent().getExtras().getParcelableArrayList("calories");
+		
+		//set the write review button to not clickable if user is not logged in
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String username = preferences.getString("isLoggedIn", "false");
+		if(username== "false")
+		{
+			Button writeReview = (Button) findViewById(R.id.write_review_button);
+			writeReview.setBackgroundColor(Color.GRAY);
+			/*writeReview.setVisibility(View.GONE);
+			writeReview.setVisibility(View.INVISIBLE);
+			writeReview.setClickable(false);*/
+		}
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
@@ -233,8 +249,11 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		 String username = preferences.getString("isLoggedIn", "false");
 		 if(username== "false")
 		 {
-				Intent intent = new Intent(this,FirstLaunchActivity.class);
-				startActivity(intent);
+			Context context = getApplicationContext();
+			CharSequence toastMessage = "Please sign up to write a review";
+			int duration = Toast.LENGTH_SHORT;
+			Toast toast = Toast.makeText(context, toastMessage, duration);
+			toast.show();
 		 }
 		 else{		// 
 			Intent intent = new Intent(this, WriteReviewActivity.class).putExtra("currDish",selectedDish);
