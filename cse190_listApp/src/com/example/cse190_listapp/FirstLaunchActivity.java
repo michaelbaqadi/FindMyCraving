@@ -8,17 +8,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.backendWebService.AsyncResponse;
-import com.backendWebService.DownloadWebpageTask;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +23,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.backendWebService.AsyncResponse;
+import com.backendWebService.DownloadWebpageTask;
 
 public class FirstLaunchActivity extends Activity implements AsyncResponse{
 	private static final String _loginUrl = "https://cakesbyannonline.com/cse190/sql_login.php";
@@ -155,6 +155,7 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 		// Also change first launch pref
 		
 		String status = null;
+		String userName = "";
 		JSONObject json = null;
 		try {
 			json = new JSONObject(output);
@@ -171,6 +172,14 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 			e.printStackTrace();
 		}
 		
+		try {
+			userName = json.getString("userName");
+			Log.v("status", status);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if(status.equalsIgnoreCase("match")){
 			//Create a toast popup
         	Context context = getApplicationContext();
@@ -181,6 +190,9 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
         	
         	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 			  SharedPreferences.Editor editor = preferences.edit();
+			  editor.putString("userEmail", userEmail.getText().toString());
+			  editor.putString("userPassword", userPassword.getText().toString());
+			  editor.putString("userName", userName);
 			  editor.putString("isLoggedIn", "true");
 			  editor.commit();
         	// Create user object
