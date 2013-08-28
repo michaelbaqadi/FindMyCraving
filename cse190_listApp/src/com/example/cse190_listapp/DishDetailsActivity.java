@@ -1,4 +1,5 @@
 package com.example.cse190_listapp;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +15,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -30,6 +34,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -43,6 +49,7 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
 	List<Review> reviews = new ArrayList<Review>();
+	String imgUrl  = "";
 	private final static String _getReviewsURL = "https://www.cakesbyannonline.com/cse190/sql_getReviews.php";
 
 	@Override
@@ -61,8 +68,8 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		String username = preferences.getString("isLoggedIn", "false");
 		if(username.equals("false"))
 		{
-			Button writeReview = (Button) findViewById(R.id.write_review_button);
-			writeReview.setBackgroundColor(Color.GRAY);
+			ImageButton writeReview = (ImageButton) findViewById(R.id.write_review_button);
+			writeReview.setImageResource(R.drawable.details_write_review_inactive);
 			/*writeReview.setVisibility(View.GONE);
 			writeReview.setVisibility(View.INVISIBLE);
 			writeReview.setClickable(false);*/
@@ -71,8 +78,36 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
         initiateDataConnection(_getReviewsURL, params);
+        imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
+        //imgUrl = selectedDish.getPictureLrg();
+        new DownloadImageTask((ImageView) findViewById(R.id.dish_picture)).execute(imgUrl);
 		
 		populateDishView();
+	}
+	
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	    ImageView bmImage;
+
+	    public DownloadImageTask(ImageView bmImage) {
+	        this.bmImage = bmImage;
+	    }
+
+	    protected Bitmap doInBackground(String... urls) {
+	        String urldisplay = urls[0];
+	        Bitmap mIcon11 = null;
+	        try {
+	            InputStream in = new java.net.URL(urldisplay).openStream();
+	            mIcon11 = BitmapFactory.decodeStream(in);
+	        } catch (Exception e) {
+	            Log.e("Error", e.getMessage());
+	            e.printStackTrace();
+	        }
+	        return mIcon11;
+	    }
+
+	    protected void onPostExecute(Bitmap result) {
+	        bmImage.setImageBitmap(result);
+	    }
 	}
 	
 	public void initiateDataConnection(String url, List<NameValuePair> params ){
@@ -174,8 +209,30 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		TextView dishName = (TextView) findViewById(R.id.dish_name);
 		dishName.setText(selectedDish.getDishName());
 		
-		TextView price = (TextView) findViewById(R.id.price);
-		price.setText(getPricesString());
+		TextView price1 = (TextView) findViewById(R.id.price1);
+		TextView price2 = (TextView) findViewById(R.id.price2);
+		TextView price3 = (TextView) findViewById(R.id.price3);
+		
+		if(prices.size() >= 1) { 
+			price1.setText("$" + prices.get(0).getDishPrice());
+		}
+		else {
+			price1.setVisibility(View.INVISIBLE);
+		}
+		
+		if(prices.size() >= 2) {
+			price2.setText("$" + prices.get(1).getDishPrice());
+		}
+		else {
+			price2.setVisibility(View.INVISIBLE);
+		}
+		
+		if(prices.size() >= 3) {
+			price3.setText("$" + prices.get(2).getDishPrice());
+		}
+		else {
+			price3.setVisibility(View.INVISIBLE);
+		}
 		
 		TextView calories = (TextView) findViewById(R.id.calories);
 		calories.setText(getCaloriesString());
@@ -200,8 +257,9 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 		TextView restaurantAddress = (TextView) findViewById(R.id.restaurant_address);
 		restaurantAddress.setText(address);
 		
-		Button call = (Button) findViewById(R.id.call_button);
-		call.setText("Call: " + selectedDish.getRestaurantPhone());
+		//not needed because now it's an Image button
+		//Button call = (Button) findViewById(R.id.call_button);
+		//call.setText("Call: " + selectedDish.getRestaurantPhone());
 		
 	}
 
@@ -215,9 +273,9 @@ public class DishDetailsActivity extends Activity implements AsyncResponse {
 	}
 
 	private String getPricesString() {
-		String priceString = "Price: ";
+		String priceString = "";
 		for(int i = 0; i < prices.size(); i++){
-			priceString += /*prices.get(i).getDishPortion() + ": " +*/ prices.get(i).getDishPrice() + " ";
+			priceString += /*prices.get(i).getDishPortion() + ": " +*/  "$" + prices.get(i).getDishPrice();
 		}
 		return priceString;
 	}
