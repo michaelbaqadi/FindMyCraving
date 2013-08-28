@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="#ffffff">
+    android:background="#fff0df">
 
     <ImageView
         android:id="@+id/dish_picture"
@@ -18,7 +18,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:orientation="vertical" 
-	    android:background="#ffffff"
+	    android:background="#fff0df"
 	    android:layout_below="@id/dish_picture"
 	    android:layout_marginLeft="10dp"
 	    android:layout_marginRight="10dp"
@@ -165,65 +165,58 @@
 		       android:id="@+id/call_button"
 		       android:layout_width="wrap_content"
 		       android:layout_height="wrap_content"
-		       android:layout_weight=".2"
+		       android:layout_weight=".166"
 		       android:src="@drawable/details_phone" 
-		       android:background="#ffffff"
+		       android:background="#fff0df"
 		       android:onClick="callClick"/>
 		
 		    <ImageButton
 		        android:id="@+id/directions_button"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight=".2"
+		        android:layout_weight=".166"
 		        android:src="@drawable/details_driving" 
-		        android:background="#ffffff"
+		        android:background="#fff0df"
 		        android:onClick="directionsClick"/>
 		    
 		    <ImageButton
 		        android:id="@+id/restaurant_info_button"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight=".2"
+		        android:layout_weight=".166"
 		        android:src="@drawable/details_rest_info"
-		        android:background="#ffffff"
+		        android:background="#fff0df"
 		        android:onClick="goToRestaurantInfoPage"/>
 		    
 		    <ImageButton
 		        android:id="@+id/menu_button"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight=".2"
+		        android:layout_weight=".166"
 		        android:src="@drawable/details_rest_menu"
-		        android:background="#ffffff"
+		        android:background="#fff0df"
 		        android:onClick="menuClick"/>
+		    
+		    <ImageButton
+		        android:id="@+id/read_reviews_button"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight=".166"
+		        android:src="@drawable/details_read_review"
+		        android:background="#fff0df"
+		        android:onClick="readReviewsClick"/>
 		    
 		    <ImageButton
 		        android:id="@+id/write_review_button"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_weight=".2"
+		        android:layout_weight=".167"
 		        android:src="@drawable/details_write_review_active"
-		        android:background="#ffffff"
+		        android:background="#fff0df"
 		        android:onClick="writeReviewClick"/>
 	    
 	        </LinearLayout>
 	
-	    <TextView
-	        android:id="@+id/reviews_text"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@id/details_buttons_menu"
-	        android:text="Reviews:" />
-	
-	    <ListView
-	        android:id="@+id/reviews_list"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@id/reviews_text" >
-	    </ListView>
-	    
 	</RelativeLayout>
 
 </RelativeLayout>
