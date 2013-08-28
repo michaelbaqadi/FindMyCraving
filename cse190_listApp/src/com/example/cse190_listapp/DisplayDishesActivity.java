@@ -123,6 +123,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		Location loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		DecimalFormat df = new DecimalFormat("###.######");
 		
+		/* Debug gps
 		 if (loc != null ){
 	            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 	            longitude =  Double.parseDouble(df.format(loc.getLongitude()));
@@ -130,7 +131,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	        }else{
 	        	Toast.makeText(this, "GPS is Disabled in your devide", Toast.LENGTH_SHORT).show();
 	        }
-		
+		*/
 				
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 100, locationListener);
 		

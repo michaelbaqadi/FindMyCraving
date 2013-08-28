@@ -20,13 +20,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="15dp" >
 
         <TextView
             android:id="@+id/dishname"
             android:layout_width="199dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="DishName" 
             android:textSize="12dp"
             android:textStyle="bold"
