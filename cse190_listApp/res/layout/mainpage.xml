@@ -7,33 +7,37 @@
 	<LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingTop="8dp"
+    android:background="#f6bc7c">
     
     <EditText
         android:id="@+id/autoCompleteTextView1"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:ems="10"
         android:hint="Search"
         android:singleLine="true" 
-        android:imeOptions="actionDone">
+        android:imeOptions="actionDone"
+        android:background="@drawable/rectangleborder"
+        >
 
     </EditText>
     <Button
 	        android:id="@+id/clearSearchBtn"
 	        android:layout_width="50dp"
-	        android:layout_height="wrap_content"
+	        android:layout_height="35dp"
 	        android:text="X" 
+	        android:textStyle="bold"
+	        android:textColor="#ffffff"
 	        android:onClick="clearSearch"
+	        android:background="@drawable/red_box"
 	        />
-    
-<!--     <Button -->
-<!-- 	        android:id="@+id/button1" -->
-<!-- 	        android:layout_width="wrap_content" -->
-<!-- 	        android:layout_height="wrap_content" -->
-<!-- 	        android:text="Search"  -->
-<!-- 	        android:onClick="executeSearch" -->
-<!-- 	        /> -->
     </LinearLayout>
 
 	<RelativeLayout 

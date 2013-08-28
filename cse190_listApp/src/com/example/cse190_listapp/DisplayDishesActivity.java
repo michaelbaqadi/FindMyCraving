@@ -1,5 +1,6 @@
 package com.example.cse190_listapp;
 
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -35,6 +39,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -43,6 +48,7 @@ import android.widget.Toast;
 
 import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
+import com.restaurant.com.DisplayRestaurantInfo.DownloadImageTask;
 
 public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	List<Dish>  dish = new  ArrayList<Dish>();
@@ -54,6 +60,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	private static final boolean DEBUG_GPS = true;
 	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDishTest.php";
 	ProgressDialog progress_dialog ;
+	final String _server = "http://www.cakesbyannonline.com/cse190/image_dish_sm/";
 
 	//private static int numReturns = 0;
 	private int searchClick = 0;
@@ -204,6 +211,31 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
             		startActivity(intent);
                 }
             });
+	}
+	//Used for image requests
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	    ImageView bmImage;
+
+	    public DownloadImageTask(ImageView bmImage) {
+	        this.bmImage = bmImage;
+	    }
+
+	    protected Bitmap doInBackground(String... urls) {
+	        String urldisplay = urls[0];
+	        Bitmap mIcon11 = null;
+	        try {
+	            InputStream in = new java.net.URL(urldisplay).openStream();
+	            mIcon11 = BitmapFactory.decodeStream(in);
+	        } catch (Exception e) {
+	            Log.e("Error", e.getMessage());
+	            e.printStackTrace();
+	        }
+	        return mIcon11;
+	    }
+
+	    protected void onPostExecute(Bitmap result) {
+	        bmImage.setImageBitmap(result);
+	    }
 	}
 	
 	public void clearSearch(View view){
@@ -383,9 +415,15 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		}
 		
 			Dish d = dish.get(position);
-			//ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
-			//imageview.setImageResource(d.getDishId());
 			
+			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
+			new DownloadImageTask(imageview).execute(_server + d.getPictureSm());
+			/*
+			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
+			
+			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
+			//imageview.setImageResource(d.getDishId());
+			*/
 			// Create a String of Prices
 			String priceString = "";
 			for(int i = 0; i<prices.size(); i++){

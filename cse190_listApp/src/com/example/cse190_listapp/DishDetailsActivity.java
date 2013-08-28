@@ -59,8 +59,8 @@ public class DishDetailsActivity extends Activity{
 			writeReview.setClickable(false);*/
 		}
 		
-        imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
-        //imgUrl = selectedDish.getPictureLrg();
+        //imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
+        imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/"+ selectedDish.getPictureLrg();
         new DownloadImageTask((ImageView) findViewById(R.id.dish_picture)).execute(imgUrl);
 		
 		populateDishView();

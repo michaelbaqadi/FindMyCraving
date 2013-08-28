@@ -94,7 +94,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			startActivity(intent);
 	}
 	
-	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	    ImageView bmImage;
 
 	    public DownloadImageTask(ImageView bmImage) {
