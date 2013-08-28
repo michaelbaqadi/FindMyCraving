@@ -1,5 +1,4 @@
 package com.example.cse190_listapp;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.restaurant.com.DisplayRestaurantInfo;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -42,7 +37,6 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
 	List<Review> reviews = new ArrayList<Review>();
-	//String imgUrl  = "";
 	private final static String _getReviewsURL = "https://www.cakesbyannonline.com/cse190/sql_getReviews.php";
 
 	@Override
@@ -176,7 +170,6 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 			getMenuInflater().inflate(R.menu.logged_in, menu);
 		}
 		return true;
-		//setVlauesToTextView(R.id.hello_id,"abcd");
 	}
 	
 	@Override
