@@ -146,7 +146,8 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 							 jsonReview.getDouble("ratingRating"),
 							 jsonReview.getString("ratingComments"),
 							 jsonReview.getString("ratingTimeStamp"),
-							 jsonReview.getString("userImagesURL")
+							 //jsonReview.getString("userImagesURL")
+							 "null user image"
 							 ));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
