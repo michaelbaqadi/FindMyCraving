@@ -12,6 +12,7 @@
 	    android:layout_marginLeft="40dp"
 	    android:layout_marginRight="40dp"
 	    android:orientation="vertical" >
+	    
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -42,7 +43,6 @@
 	        android:background="@drawable/rectangleborder"
 	        />
 	      
-	
 	    <EditText
 	        android:id="@+id/password1Input"
 	        android:layout_width="match_parent"
