@@ -39,6 +39,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
 	DownloadWebpageTask webtask;
+	String userIDVal = " ";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		TextView resName = (TextView) findViewById(R.id.resnamewrite);
 		resName.setText(selectedDish.getRestaurantName());
 		
-		
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		userIDVal = pref.getString("userID", "1");
 		// to download a picture
 		
 		// send restaurant id
@@ -176,7 +178,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 			String textValue = reviewBox.getText().toString();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userID", "1"));
+			params.add(new BasicNameValuePair("userID", userIDVal));
 			params.add(new BasicNameValuePair("rating", String.valueOf(rating)));
 			params.add(new BasicNameValuePair("comments", textValue));
 			params.add(new BasicNameValuePair("dishID", selectedDish
