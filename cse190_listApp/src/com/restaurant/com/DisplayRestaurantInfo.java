@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebView;
@@ -53,7 +55,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 	String imgUrl  = "";
 	private static final String _getresInfo 
 			= "https://www.cakesbyannonline.com/cse190/sql_getRestaurantInfo.php";
-	
+	String urlres = " ";
 	DownloadWebpageTask webtask;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +70,28 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
         params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
         new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
         .execute(imgUrl);	
-		
+        TextView line8 = (TextView)findViewById(R.id.line8); 
 		initiateDataConnection(_getresInfo, params);
-    	
+		line8.setOnClickListener(new OnClickListener() {	 
+			public void onClick(View arg0) {
+	 
+				Intent intent = new Intent(Intent.ACTION_VIEW, 
+				     Uri.parse(urlres));
+				startActivity(intent);
+	 
+			}
+	 
+		});
+	}
+	public void uploadWebsite(View view)
+	{
+		Context context = getApplicationContext();
+    	int duration = Toast.LENGTH_SHORT;
+    	Toast toast = Toast.makeText(context, "it's clickable", duration);
+    	toast.show();
+		Intent intent = new Intent(Intent.ACTION_VIEW, 
+				Uri.parse("http://www.mkyong.com"));
+			startActivity(intent);
 	}
 	
 	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -163,6 +184,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
 			 restaurantImageURL = jsonObject.getString("restaurantImageURL");
 			 restaurantImageURL = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
+			 urlres = restaurantURL;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,8 +209,8 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			line5.setText(restaurantCity + ", " + restaurantState + " " + restaurantZip);
 			line6.setText(restaurantPhone);
 			
-			line7.setText(restaurantEmail + "email");
-			line8.setText(restaurantURL + "url");
+			line7.setText(restaurantEmail);
+			line8.setText(restaurantURL);
 			
 			new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
 	        .execute(restaurantImageURL);	
