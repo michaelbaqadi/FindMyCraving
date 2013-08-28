@@ -8,15 +8,17 @@ import android.os.Parcelable;
 
 public  class Review implements Parcelable{
 	
-	private String  userID;
+	private String userID;
+	private String userName; 
 	private float rating;
 	private String comments;
 	private String timeStamp;
 	private String userPicture;
 
-	public Review(String userID, double rating, String comments, String timeStamp, String userPicture) {
+	public Review(String userID, String userName, double rating, String comments, String timeStamp, String userPicture) {
 	
 		this.userID = userID;
+		this.userName = userName;
 		this.rating = (float) rating;
 		this.comments = comments;
 		this.timeStamp = timeStamp;
@@ -39,6 +41,14 @@ public  class Review implements Parcelable{
 	 */
 	public void setUserID(String userID) {
 		this.userID = userID;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	/**
@@ -96,6 +106,7 @@ public  class Review implements Parcelable{
 	
 	private void readFromParcel(Parcel in) {
 		userID = in.readString();
+		userName = in.readString();
 		rating = in.readFloat();
 		comments = in.readString();
 		timeStamp = in.readString();
@@ -112,12 +123,13 @@ public  class Review implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(userID);
+		dest.writeString(userName);
         dest.writeFloat(rating);
         dest.writeString(comments);
         dest.writeString(timeStamp);
         dest.writeString(userPicture);
 	}
-	
+
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Review createFromParcel(Parcel in ) {
             return new Review( in );

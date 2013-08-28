@@ -108,6 +108,9 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 					    
 					    Review currReview = reviews.get(position);
 					    
+					    TextView userName = (TextView) row.findViewById(R.id.username);
+						userName.setText(currReview.getUserName());
+					    
 					    TextView dateText = (TextView) row.findViewById(R.id.date_text);
 						dateText.setText(formatDate(currReview.getTimeStamp()));
 						
@@ -141,14 +144,15 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 				e.printStackTrace();
 			}
 			for(int i=0; i<jArry.length(); i++){
-				JSONObject jsonDish = null;
+				JSONObject jsonReview = null;
 				try {
-					 jsonDish = jArry.getJSONObject(i);
-					 reviews.add(0, new Review(jsonDish.getString("ratingUserID"),
-							 jsonDish.getDouble("ratingRating"),
-							 jsonDish.getString("ratingComments"),
-							 jsonDish.getString("ratingTimeStamp"),
-							 jsonDish.getString("userImagesURL")
+					 jsonReview = jArry.getJSONObject(i);
+					 reviews.add(0, new Review(jsonReview.getString("ratingUserID"),
+							 jsonReview.getString("userName"),
+							 jsonReview.getDouble("ratingRating"),
+							 jsonReview.getString("ratingComments"),
+							 jsonReview.getString("ratingTimeStamp"),
+							 jsonReview.getString("userImagesURL")
 							 ));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

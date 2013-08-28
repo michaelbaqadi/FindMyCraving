@@ -39,7 +39,7 @@ public class DishDetailsActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#aa2224")));
+		//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#881113")));
 		getActionBar().show();
 		setContentView(R.layout.dish_details);
 		
