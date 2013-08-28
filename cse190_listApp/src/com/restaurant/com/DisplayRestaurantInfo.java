@@ -67,9 +67,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 		webtask = new DownloadWebpageTask();
 		webtask.delegate = this;
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
-        new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
-        .execute(imgUrl);	
+        params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));	
         TextView line8 = (TextView)findViewById(R.id.line8); 
 		initiateDataConnection(_getresInfo, params);
 		line8.setOnClickListener(new OnClickListener() {	 
@@ -183,7 +181,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			 restaurantAvgPriceRating = jsonObject.getString("restaurantAvgPriceRating");
 			 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
 			 restaurantImageURL = jsonObject.getString("restaurantImageURL");
-			 restaurantImageURL = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
+			 restaurantImageURL = "http://cakesbyannonline.com/cse190/"+ restaurantImageURL;
 			 urlres = restaurantURL;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
