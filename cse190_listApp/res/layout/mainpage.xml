@@ -33,7 +33,7 @@
 	        android:id="@+id/clearSearchBtn"
 	        android:layout_width="50dp"
 	        android:layout_height="35dp"
-	        android:text="X" 
+	        android:text="Clear" 
 	        android:textStyle="bold"
 	        android:textColor="#ffffff"
 	        android:onClick="clearSearch"
