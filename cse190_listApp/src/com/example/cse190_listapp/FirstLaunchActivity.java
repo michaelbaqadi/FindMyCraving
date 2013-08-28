@@ -156,6 +156,7 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 		
 		String status = null;
 		String userName = "";
+		String userID = "";
 		JSONObject json = null;
 		try {
 			json = new JSONObject(output);
@@ -179,6 +180,14 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			userID = json.getString("userID");
+			Log.v("status", status);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		if(status.equalsIgnoreCase("match")){
 			//Create a toast popup
@@ -193,6 +202,7 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 			  editor.putString("userEmail", userEmail.getText().toString());
 			  editor.putString("userPassword", userPassword.getText().toString());
 			  editor.putString("userName", userName);
+			  editor.putString("userID", userID);
 			  editor.putString("isLoggedIn", "true");
 			  editor.commit();
         	// Create user object
