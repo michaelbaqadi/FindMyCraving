@@ -1,5 +1,6 @@
 package com.example.cse190_listapp;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +14,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +42,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		String imgUrl ="";
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().show();
@@ -49,8 +56,53 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		calories = getIntent().getExtras().getParcelableArrayList("calories");
 		TextView dishName = (TextView) findViewById(R.id.dish_name);
 		dishName.setText(selectedDish.getDishName());
-
+		
+		TextView resName = (TextView) findViewById(R.id.resnamewrite);
+		resName.setText(selectedDish.getRestaurantName());
+		
+		
+		// to download a picture
+		
+		// send restaurant id
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
+        //imgUrl = selectedDish.getPictureLrg();
+        imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
+        new DownloadImageTask((ImageView) findViewById(R.id.dish_picture))
+        .execute(imgUrl);
+        
+        
+        
+        
 	}
+	
+	
+	
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	    ImageView bmImage;
+
+	    public DownloadImageTask(ImageView bmImage) {
+	        this.bmImage = bmImage;
+	    }
+
+	    protected Bitmap doInBackground(String... urls) {
+	        String urldisplay = urls[0];
+	        Bitmap mIcon11 = null;
+	        try {
+	            InputStream in = new java.net.URL(urldisplay).openStream();
+	            mIcon11 = BitmapFactory.decodeStream(in);
+	        } catch (Exception e) {
+	            Log.e("Error", e.getMessage());
+	            e.printStackTrace();
+	        }
+	        return mIcon11;
+	    }
+
+	    protected void onPostExecute(Bitmap result) {
+	        bmImage.setImageBitmap(result);
+	    }
+	}
+	//////////////////////////////////////
 
 	public void initiateDataConnection(String url, List<NameValuePair> params) {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
