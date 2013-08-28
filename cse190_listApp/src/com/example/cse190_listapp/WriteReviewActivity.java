@@ -175,6 +175,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		// getting the text from the textbox
 		EditText reviewBox = (EditText) findViewById(R.id.reviewtextbox);
 		if (reviewBox.getText().toString().length() != 0) {
+			finish();
 			String textValue = reviewBox.getText().toString();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
