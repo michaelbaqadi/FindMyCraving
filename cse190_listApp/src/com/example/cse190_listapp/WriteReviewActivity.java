@@ -69,7 +69,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("restID", getIntent().getExtras().getString("restID")));
         //imgUrl = selectedDish.getPictureLrg();
-        imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
+        imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/"+ selectedDish.getPictureLrg();
         new DownloadImageTask((ImageView) findViewById(R.id.dish_picture))
         .execute(imgUrl);
                      
@@ -164,7 +164,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 
 	/** Called when the user clicks the Update button */
 	public void postClick(View view) {
-		String _getReviewsURL = "http://cakesbyannonline.com/cse190/image_dish_lrg/"+ selectedDish.getPictureLrg();
+		String _getReviewsURL = "https://www.cakesbyannonline.com/cse190/sql_createReview.php";
 		Context context = getApplicationContext();
 		CharSequence toastMessage = "Your review was posted!";
 
