@@ -6,7 +6,7 @@
     
     <LinearLayout
         android:id="@+id/user_info"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
