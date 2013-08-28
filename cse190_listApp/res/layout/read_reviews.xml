@@ -7,11 +7,14 @@
     
     <TextView
         android:id="@+id/reviews_dish_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:background="#f6bc7c"
+        android:paddingTop="1dp"
+        android:gravity="center"
         android:textSize="20sp"
-	    android:textStyle="bold"
+        android:textStyle="bold" 
+        android:textColor="#ab2224"
         android:text="Dish Name:" />
 	
     <ListView

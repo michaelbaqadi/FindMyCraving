@@ -9,8 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal" 
-    android:paddingLeft="18dp"
-    android:paddingRight="18dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:paddingTop="8dp"
     android:background="#f6bc7c">
     
@@ -33,6 +33,8 @@
 	        android:id="@+id/clearSearchBtn"
 	        android:layout_width="50dp"
 	        android:layout_height="35dp"
+	        android:paddingLeft="4dp"
+        	android:paddingRight="4dp"
 	        android:text="Clear" 
 	        android:textStyle="bold"
 	        android:textColor="#ffffff"

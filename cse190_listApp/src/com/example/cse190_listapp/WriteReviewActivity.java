@@ -16,6 +16,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -46,6 +48,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 		String imgUrl ="";
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#881113")));
 		getActionBar().show();
 		setContentView(R.layout.write_review);
 

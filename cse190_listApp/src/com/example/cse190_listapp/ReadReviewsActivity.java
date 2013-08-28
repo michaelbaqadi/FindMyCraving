@@ -12,6 +12,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#881113")));
 		getActionBar().show();
 		setContentView(R.layout.read_reviews);
 		

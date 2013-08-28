@@ -18,6 +18,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -117,6 +119,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#881113")));
 		getActionBar().show();
 		progress_dialog = new ProgressDialog(DisplayDishesActivity.this);
 	    progress_dialog.setMessage("Loading please wait..");
