@@ -389,14 +389,14 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			String priceString = "";
 			for(int i = 0; i<prices.size(); i++){
 				if(d.getDishId().equalsIgnoreCase(prices.get(i).getDishID())){
-					priceString += prices.get(i).getDishPortion() + ": " + prices.get(i).getDishPrice() + " ";
+					priceString += "$" + prices.get(i).getDishPrice() + "  ";
 				}
 			}
 			//Create a String of Calories
 			String caloriesString = "";
 			for(int i = 0; i<calories.size(); i++){
 				if(d.getDishId().equalsIgnoreCase(calories.get(i).getDishID())){
-					caloriesString += calories.get(i).getPortionSize() + ": " + calories.get(i).getCalories() + " ";
+					caloriesString += calories.get(i).getCalories() + "  ";
 				}
 			}
 			
@@ -411,7 +411,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			dishCalories.setText("Calories: " + caloriesString);
 			
 			TextView restaurantName = (TextView) itemview.findViewById(R.id.restaurantname3);
-			restaurantName.setText("Restaurant: " + d.getRestaurantName());
+			restaurantName.setText(d.getRestaurantName());
 			
 			RatingBar ratingBar = (RatingBar) itemview.findViewById(R.id.rating2);
 			ratingBar.setRating(d.getRating());
