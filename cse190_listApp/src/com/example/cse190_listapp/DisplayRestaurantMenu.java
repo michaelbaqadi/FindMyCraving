@@ -1,5 +1,6 @@
 package com.example.cse190_listapp;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -26,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -42,6 +47,7 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDish.php";
 	private static final String _getDishCaloriesURL = "https://www.cakesbyannonline.com/cse190/sql_getDishCalories.php";
 	private static final String _getDishPriceURL = "https://www.cakesbyannonline.com/cse190/sql_getDishPrice.php";
+	final String _server = "http://www.cakesbyannonline.com/cse190/image_dish_sm/";
 	private static int numReturns = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +154,8 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 				}
 				
 			}
+			TextView restname = (TextView)findViewById(R.id.restName);
+			restname.setText(dish.get(0).getRestaurantName());
 			numReturns++;
 		} else if(rawJSON.contains(new StringBuffer("dishCalorieDishID"))){
 			JSONArray jArry = null;
@@ -226,6 +234,31 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 		list.setAdapter(adapter);
 		
 	}
+	//Used for image requests
+		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+		    ImageView bmImage;
+
+		    public DownloadImageTask(ImageView bmImage) {
+		        this.bmImage = bmImage;
+		    }
+
+		    protected Bitmap doInBackground(String... urls) {
+		        String urldisplay = urls[0];
+		        Bitmap mIcon11 = null;
+		        try {
+		            InputStream in = new java.net.URL(urldisplay).openStream();
+		            mIcon11 = BitmapFactory.decodeStream(in);
+		        } catch (Exception e) {
+		            Log.e("Error", e.getMessage());
+		            e.printStackTrace();
+		        }
+		        return mIcon11;
+		    }
+
+		    protected void onPostExecute(Bitmap result) {
+		        bmImage.setImageBitmap(result);
+		    }
+		}
 	public class MyListAdapter extends ArrayAdapter<Dish>
 	{
 
@@ -240,12 +273,14 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 			View itemview = convertView;
 			if(itemview == null)
 			{
-				itemview = getLayoutInflater().inflate(R.layout.itemview,parent,false);
+				itemview = getLayoutInflater().inflate(R.layout.rest_item_view,parent,false);
 			}
 			
 			Dish d = dish.get(position);
-			//ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
-			//imageview.setImageResource(d.getDishId());
+			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
+			new DownloadImageTask(imageview).execute(_server + d.getPictureSm());
+			
+			
 			
 			// Create a String of Prices
 			String priceString = "";
@@ -273,8 +308,8 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 			TextView dishCalories = (TextView) itemview.findViewById(R.id.dishCalories2);
 			dishCalories.setText("Calories: " + caloriesString);
 			
-			TextView restaurantName = (TextView) itemview.findViewById(R.id.restaurantname3);
-			restaurantName.setText(" ");
+			//TextView restaurantName = (TextView) itemview.findViewById(R.id.restaurantname3);
+			//restaurantName.setText(" ");
 			
 			RatingBar ratingBar = (RatingBar) itemview.findViewById(R.id.rating2);
 			ratingBar.setRating(d.getRating());

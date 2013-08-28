@@ -2,31 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#fff0df">
 
-	<LinearLayout 
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:orientation="horizontal" >
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView6"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="Search" >
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="30dp"
+	    android:background="#f6bc7c"
+	    >
 
-        <requestFocus
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </AutoCompleteTextView>
-    <Button
-	        android:id="@+id/restaurantinfo_x6"
-	        android:layout_width="wrap_content"
+	    <TextView
+	        android:id="@+id/restName"
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:text="Search" 
-	        />
-    </LinearLayout>
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:paddingTop="1dp"
+	        android:gravity="center"
+	        android:text=""
+	        android:textSize="20sp"
+	        android:textStyle="bold" 
+	        android:textColor="#ab2224"/>
+	    
+	</RelativeLayout>
 
 	<RelativeLayout 
 	    android:layout_width="wrap_content"
