@@ -70,10 +70,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
         imgUrl = "http://cakesbyannonline.com/cse190/image_dish_lrg/Tomato-Cheese-Pizza.jpg";
         new DownloadImageTask((ImageView) findViewById(R.id.dish_picture))
         .execute(imgUrl);
-        
-        
-        
-        
+                     
 	}
 	
 	

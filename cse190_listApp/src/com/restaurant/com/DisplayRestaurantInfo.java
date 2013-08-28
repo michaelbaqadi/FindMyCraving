@@ -178,24 +178,18 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			TextView line6 = (TextView)findViewById(R.id.line6); 
 			TextView line7 = (TextView)findViewById(R.id.line7); 
 			TextView line8 = (TextView)findViewById(R.id.line8); 
-			TextView line9 = (TextView)findViewById(R.id.line9); 
-			TextView line10 = (TextView)findViewById(R.id.line10); 
-			TextView line11 = (TextView)findViewById(R.id.line11); 
-			TextView line12 = (TextView)findViewById(R.id.line12); 
 
-				
-			line1.setText("Name: " + restaurantName);
-			line2.setText("restaurantStreet1: " +restaurantStreet1);
-			line3.setText("restaurantStreet2: " + restaurantStreet2);
-			line4.setText("City: " + restaurantCity);
-			line5.setText("State: " + restaurantState);
-			line6.setText("ZipCode: " + restaurantZip);
-			line7.setText("Phone: " + restaurantPhone);
-			line8.setText("Email: " + restaurantEmail);
-			line9.setText("WebSite: " + restaurantURL);
-			line10.setText ("Category: " + restaurantCategory);
-			line11.setText("Average Price: " + restaurantAvgPriceRating);
-			line12.setText("Opening Hours: " + restaurantTimestamp);
+			line1.setText(restaurantName);
+			line2.setText("Category: " + restaurantCategory);
+			line3.setText("Average Price: " + restaurantAvgPriceRating + "$");
+			
+			line4.setText(restaurantStreet1 + " " +restaurantStreet2);
+			line5.setText(restaurantCity + ", " + restaurantState + " " + restaurantZip);
+			line6.setText(restaurantPhone);
+			
+			line7.setText(restaurantEmail + "email");
+			line8.setText(restaurantURL + "url");
+			
 			new DownloadImageTask((ImageView) findViewById(R.id.restaurantpicture))
 	        .execute(restaurantImageURL);	
     }
