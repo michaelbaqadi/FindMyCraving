@@ -54,8 +54,8 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
         initiateDataConnection(_getReviewsURL, params);
         
-        TextView dishName = (TextView) findViewById(R.id.reviews_dish_name);
-		dishName.setText(selectedDish.getDishName());
+        TextView calories = (TextView) findViewById(R.id.reviews_dish_name);
+		calories.setText(selectedDish.getDishName());
 		
 	}
 	
@@ -146,8 +146,7 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 							 jsonReview.getDouble("ratingRating"),
 							 jsonReview.getString("ratingComments"),
 							 jsonReview.getString("ratingTimeStamp"),
-							 //jsonReview.getString("userImagesURL")
-							 "null user image"
+							 jsonReview.getString("userImagesURL")
 							 ));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
