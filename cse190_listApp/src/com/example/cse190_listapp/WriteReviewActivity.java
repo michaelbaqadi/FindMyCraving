@@ -164,7 +164,7 @@ public class WriteReviewActivity extends Activity implements AsyncResponse {
 
 	/** Called when the user clicks the Update button */
 	public void postClick(View view) {
-		String _getReviewsURL = "https://www.cakesbyannonline.com/cse190/sql_createReview.php";
+		String _getReviewsURL = "http://cakesbyannonline.com/cse190/image_dish_lrg/"+ selectedDish.getPictureLrg();
 		Context context = getApplicationContext();
 		CharSequence toastMessage = "Your review was posted!";
 
