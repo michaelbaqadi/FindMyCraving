@@ -273,7 +273,7 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 			View itemview = convertView;
 			if(itemview == null)
 			{
-				itemview = getLayoutInflater().inflate(R.layout.rest_item_view,parent,false);
+				itemview = getLayoutInflater().inflate(R.layout.itemview,parent,false);
 			}
 			
 			Dish d = dish.get(position);
