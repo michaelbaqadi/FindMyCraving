@@ -3,6 +3,8 @@ package com.example.cse190_listapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Window;
@@ -13,9 +15,8 @@ public class Splash extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		 getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		   getActionBar().hide();
-		//getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-	    //getActionBar().hide();
+		 getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#aa2224")));
+		 getActionBar().hide();
 	    
 		setContentView(R.layout.splash);
  		Thread timer = new Thread()
