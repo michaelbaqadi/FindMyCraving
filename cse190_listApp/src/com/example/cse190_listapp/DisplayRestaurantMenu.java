@@ -1,6 +1,7 @@
 package com.example.cse190_listapp;
 
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -51,6 +55,56 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 	private static final String _getDishPriceURL = "https://www.cakesbyannonline.com/cse190/sql_getDishPrice.php";
 	final String _server = "http://www.cakesbyannonline.com/cse190/image_dish_sm/";
 	private static int numReturns = 0;
+	double longitude=0;
+	double latitude=0;
+	
+private LocationManager lm;
+	
+	private final LocationListener locationListener = new LocationListener() {
+	    
+		public void onLocationChanged(Location location) {
+	        longitude = location.getLongitude();
+	        latitude = location.getLatitude();
+	        
+	        Context context = getApplicationContext();
+	    	CharSequence text = new StringBuilder().append(latitude).toString() + new StringBuilder().append(longitude).toString();
+	    	int duration = Toast.LENGTH_SHORT;
+	    	Toast toast = Toast.makeText(context, text, duration);
+	    	toast.show();
+	        
+	    }
+
+		@Override
+		public void onProviderDisabled(String arg0) {
+			// TODO Auto-generated method stub
+			lm.removeUpdates(locationListener);
+			Context context = getApplicationContext();
+	    	CharSequence text = "GPS Unavailable";
+	    	int duration = Toast.LENGTH_SHORT;
+	    	Toast toast = Toast.makeText(context, text, duration);
+	    	toast.show();
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			Context context = getApplicationContext();
+	    	CharSequence text = "GPS Enabled";
+	    	int duration = Toast.LENGTH_SHORT;
+	    	Toast toast = Toast.makeText(context, text, duration);
+	    	toast.show();
+			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -60,8 +114,26 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 		getActionBar().show();
 		setContentView(R.layout.displayrestaurantmenu);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("lat", "1"));
-        params.add(new BasicNameValuePair("long", "1"));
+		
+		/************** GPS ****************/
+		
+		lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
+		Location loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		DecimalFormat df = new DecimalFormat("###.######");
+		
+		 //Debug gps
+		 if (loc != null ){
+	            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+	            longitude =  Double.parseDouble(df.format(loc.getLongitude()));
+	    		latitude = Double.parseDouble(df.format(loc.getLatitude()));
+	        }else{
+	        	Toast.makeText(this, "GPS is Disabled in your devide", Toast.LENGTH_SHORT).show();
+	        }
+		
+				
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 100, locationListener);
+        params.add(new BasicNameValuePair("lat", "latitude"));
+        params.add(new BasicNameValuePair("long", "longitude"));
         
 	 
 		params.add(new BasicNameValuePair
@@ -108,21 +180,25 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
         }
     }
 	public void processFinish(String result){
-		populateDishList(result);
+		try {
+			populateDishList(result);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(numReturns >=3){
 			populateDishesWithPrices();
 			populateDishesWithCalories();
 			Log.d("numReturns: ", new StringBuilder(numReturns).toString());
 			populateListView();
 			numReturns = 0;
-			
 		}
 	     // Parse JSON String
 	     // Create Objects
 	    // Populate views, etc
 	}
 	//Populates dish List, price List, and Calories List
-	private void populateDishList(String rawJSON) {
+	private void populateDishList(String rawJSON) throws JSONException{
 		if(rawJSON.contains(new StringBuffer("dishName"))){
 			JSONArray jArry = null;
 			try {
@@ -133,28 +209,32 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
 			}
 			for(int i=0; i<jArry.length(); i++){
 				JSONObject jsonDish = null;
-				try {
-					 jsonDish = jArry.getJSONObject(i);
-					 dish.add(new Dish(jsonDish.getString("dishID"),
-							 jsonDish.getString("dishName"),
-							 jsonDish.getString("dishDescription"),
-							 jsonDish.getDouble("rating"),
-							 jsonDish.getString("dishImageSmURL"),
-							 jsonDish.getString("dishImageLrgURL"),
-							 jsonDish.getString("restaurantID"),
-							 jsonDish.getString("restaurantName"),
-							 jsonDish.getString("restaurantPhone"),
-							 jsonDish.getString("restaurantStreet1"),
-							 jsonDish.getString("restaurantStreet2"),
-							 jsonDish.getString("restaurantCity"),
-							 jsonDish.getString("restaurantState"),
-							 jsonDish.getString("restaurantZip"),
-							 jsonDish.getString("restaurantURL")
-							 ));
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();					
+				jsonDish = jArry.getJSONObject(i);
+				String rating="";
+				if(!jsonDish.getString("rating").equals("null")){
+					rating = jsonDish.getString("rating");
+				}else{
+					rating = "0";
 				}
+				
+				 
+				 dish.add(new Dish(jsonDish.getString("dishID"),
+						 jsonDish.getString("dishName"),
+						 jsonDish.getString("dishDescription"),
+						 //jsonDish.getDouble("rating"),
+						 Double.parseDouble(rating),
+						 jsonDish.getString("dishImageSmURL"),
+						 jsonDish.getString("dishImageLrgURL"),
+						 jsonDish.getString("restaurantID"),
+						 jsonDish.getString("restaurantName"),
+						 jsonDish.getString("restaurantPhone"),
+						 jsonDish.getString("restaurantStreet1"),
+						 jsonDish.getString("restaurantStreet2"),
+						 jsonDish.getString("restaurantCity"),
+						 jsonDish.getString("restaurantState"),
+						 jsonDish.getString("restaurantZip"),
+						 jsonDish.getString("restaurantURL")
+						 ));
 				
 			}
 			TextView restname = (TextView)findViewById(R.id.restName);

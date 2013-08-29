@@ -75,13 +75,13 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		public void onLocationChanged(Location location) {
 	        longitude = location.getLongitude();
 	        latitude = location.getLatitude();
-	        /*
+	        
 	        Context context = getApplicationContext();
 	    	CharSequence text = new StringBuilder().append(latitude).toString() + new StringBuilder().append(longitude).toString();
 	    	int duration = Toast.LENGTH_SHORT;
 	    	Toast toast = Toast.makeText(context, text, duration);
 	    	toast.show();
-	        */
+	        
 	    }
 
 		@Override
@@ -133,7 +133,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		Location loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		DecimalFormat df = new DecimalFormat("###.######");
 		
-		/* Debug gps
+		 //Debug gps
 		 if (loc != null ){
 	            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 	            longitude =  Double.parseDouble(df.format(loc.getLongitude()));
@@ -141,7 +141,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	        }else{
 	        	Toast.makeText(this, "GPS is Disabled in your devide", Toast.LENGTH_SHORT).show();
 	        }
-		*/
+		
 				
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 100, locationListener);
 		
@@ -333,10 +333,18 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		
 		for(int i=0; i<dishJsonArry.length(); i++){
 			JSONObject jsonDish = dishJsonArry.getJSONObject(i);
-		 dish.add(new Dish(jsonDish.getString("dishID"),
+			String rating="";
+			if(!jsonDish.getString("rating").equals("null")){
+				rating = jsonDish.getString("rating");
+			}else{
+				rating = "0";
+			}
+			
+			dish.add(new Dish(jsonDish.getString("dishID"),
 			 jsonDish.getString("dishName"),
 			 jsonDish.getString("dishDescription"),
-			 jsonDish.getDouble("rating"),
+			 //jsonDish.getDouble("rating"),
+			 Double.parseDouble(rating),
 			 jsonDish.getString("dishImageSmURL"),
 			 jsonDish.getString("dishImageLrgURL"),
 			 jsonDish.getString("restaurantID"),

@@ -184,7 +184,7 @@ public class DisplayRestaurantInfo extends Activity implements AsyncResponse {
 			 restaurantAvgPriceRating = jsonObject.getString("restaurantAvgPriceRating");
 			 restaurantTimestamp= jsonObject.getString("restaurantTimestamp");
 			 restaurantImageURL = jsonObject.getString("restaurantImageURL");
-			 restaurantImageURL = "http://cakesbyannonline.com/cse190/"+ restaurantImageURL;
+			 restaurantImageURL = "http://cakesbyannonline.com/cse190/image_rest/"+ restaurantImageURL;
 			 urlres = restaurantURL;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

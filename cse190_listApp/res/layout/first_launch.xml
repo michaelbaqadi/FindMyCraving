@@ -89,7 +89,7 @@
             android:drawableLeft="@drawable/login_browse"
             android:onClick="browseClick"
             android:paddingLeft="20dp"
-            android:text="Start Browising"
+            android:text="Start Browsing"
             android:textColor="#ffffff"
             android:textStyle="bold" />
     </LinearLayout>
