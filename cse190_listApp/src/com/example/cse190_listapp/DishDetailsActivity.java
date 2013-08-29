@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DishDetailsActivity extends Activity{
+	public static Activity fa;
 	private Dish selectedDish = null;
 	List<DishPrice> prices = new ArrayList<DishPrice>();
 	List<DishCalories> calories = new ArrayList<DishCalories>();
@@ -38,6 +39,7 @@ public class DishDetailsActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		fa = this;
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#881113")));
 		getActionBar().show();
