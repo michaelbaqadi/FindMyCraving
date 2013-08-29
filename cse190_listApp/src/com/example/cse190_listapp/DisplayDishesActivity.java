@@ -75,13 +75,13 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		public void onLocationChanged(Location location) {
 	        longitude = location.getLongitude();
 	        latitude = location.getLatitude();
-	        
+	        /*
 	        Context context = getApplicationContext();
 	    	CharSequence text = new StringBuilder().append(latitude).toString() + new StringBuilder().append(longitude).toString();
 	    	int duration = Toast.LENGTH_SHORT;
 	    	Toast toast = Toast.makeText(context, text, duration);
 	    	toast.show();
-	        
+	        */
 	    }
 
 		@Override
@@ -135,7 +135,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		
 		 //Debug gps
 		 if (loc != null ){
-	            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+	            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 	            longitude =  Double.parseDouble(df.format(loc.getLongitude()));
 	    		latitude = Double.parseDouble(df.format(loc.getLatitude()));
 	        }else{
