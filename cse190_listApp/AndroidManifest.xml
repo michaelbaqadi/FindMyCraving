@@ -22,7 +22,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.cse190_listapp.FirstLaunchActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.start" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -30,7 +32,9 @@
         </activity>  
         <activity
             android:name="com.example.cse190_listapp.Splash"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +43,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.DisplayRestaurantMenu"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -48,7 +54,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.SignUpActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -56,7 +64,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.DisplayDishesActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -64,7 +74,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.DishDetailsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+             > 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -72,7 +84,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.EditProfileActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -80,7 +94,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.WriteReviewActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -88,7 +104,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.RestaurantMenuActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -96,7 +114,9 @@
         </activity>
         <activity
             android:name="com.restaurant.com.DisplayRestaurantInfo"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -104,7 +124,9 @@
         </activity>
         <activity
             android:name="com.example.cse190_listapp.ReadReviewsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

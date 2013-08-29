@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" 
      >
- <!-- Bob Comment alksdjf;askljdf;laksdjf-->
+
     <ImageView
         android:id="@+id/dishpicture"
         android:layout_width="122dp"
@@ -53,6 +53,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="42dp"
                 android:isIndicator="true"
+                android:stepSize="0.1"
                 android:numStars="5" />
 
         </RelativeLayout>
