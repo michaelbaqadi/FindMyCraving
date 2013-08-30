@@ -218,9 +218,11 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	//Used for image requests
 	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	    ImageView bmImage;
+	    int position;
 
-	    public DownloadImageTask(ImageView bmImage) {
-	        this.bmImage = bmImage;
+	    public DownloadImageTask(int position) {
+	       // this.bmImage = bmImage;
+	        this.position = position;
 	    }
 
 	    protected Bitmap doInBackground(String... urls) {
@@ -237,7 +239,12 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	    }
 
 	    protected void onPostExecute(Bitmap result) {
-	        bmImage.setImageBitmap(result);
+	        // set the dish Bitmap
+	    	dish.get(position).setDishImage(result);
+	    	ArrayAdapter<Dish> adapter = new MyListAdapter();
+			ListView list = (ListView)findViewById(R.id.dishlistview);
+			list.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 	    }
 	}
 	
@@ -357,6 +364,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			 jsonDish.getString("restaurantZip"),
 			 jsonDish.getString("restaurantURL")
 			 ));
+			
+			new DownloadImageTask(i).execute(_server + dish.get(i).getPictureSm());
 		}
 		
 		
@@ -428,7 +437,10 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			Dish d = dish.get(position);
 			
 			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
-			new DownloadImageTask(imageview).execute(_server + d.getPictureSm());
+			imageview.setImageResource(R.drawable.sm_place_holder);
+			if(d.getDishImage() != null){
+				imageview.setImageBitmap(d.getDishImage());
+			}
 			/*
 			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
 			

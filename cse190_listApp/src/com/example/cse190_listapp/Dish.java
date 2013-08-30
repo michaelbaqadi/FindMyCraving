@@ -3,6 +3,7 @@ package com.example.cse190_listapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,6 +26,15 @@ public  class Dish implements Parcelable{
 	private String restaurantURL;
 	public List<DishPrice> prices;
 	public List<DishCalories> calories;
+	private Bitmap dishImage;
+
+	public Bitmap getDishImage() {
+		return dishImage;
+	}
+
+	public void setDishImage(Bitmap dishImage) {
+		this.dishImage = dishImage;
+	}
 
 	public Dish(String dishId, String  dishName, String description, double rating,
 	String pictureSm, String pictureLrg, String restaurantID, String restaurantName,
