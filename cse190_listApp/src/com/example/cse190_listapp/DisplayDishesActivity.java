@@ -166,37 +166,40 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		    		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
 		                       InputMethodManager.HIDE_NOT_ALWAYS);
 		    		
-		    		
 		    		EditText search = (EditText)findViewById(R.id.autoCompleteTextView1);
-		    		
-		    		// Create paramters for the data request
-		    		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		            params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
-		            params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
-		            params.add(new BasicNameValuePair("searchTerm", search.getText().toString()));
-		            
-		            //Empty Dish, prices, calories for new data
-		            dish.removeAll(dish);
-		        	prices.removeAll(prices);
-		        	calories.removeAll(calories);
-		        	
-		        	// Get the dish data
-		        	getDishData(params);
-		    		searchClick = 1;			        	
-		        	
-		        	/* Done Button Hit Debug
-		        	Context context = getApplicationContext();
-			    	CharSequence text = "Done Button Hit";
-			    	int duration = Toast.LENGTH_SHORT;
-			    	Toast toast = Toast.makeText(context, text, duration);
-			    	toast.show();
-		        	*/
-		            return true;
-		        }
-		        else {
-		            return false;
-		        }
-		    }
+		    		if(!search.getText().toString().equals("")){
+		    			search = (EditText)findViewById(R.id.autoCompleteTextView1);
+			    		
+			    		// Create paramters for the data request
+			    		List<NameValuePair> params = new ArrayList<NameValuePair>();
+			            params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
+			            params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
+			            params.add(new BasicNameValuePair("searchTerm", search.getText().toString()));
+			            
+			            //Empty Dish, prices, calories for new data
+			            dish.removeAll(dish);
+			        	prices.removeAll(prices);
+			        	calories.removeAll(calories);
+			        	
+			        	// Get the dish data
+			        	getDishData(params);
+			    		searchClick = 1;			        	
+			        	
+			        	/* Done Button Hit Debug
+			        	Context context = getApplicationContext();
+				    	CharSequence text = "Done Button Hit";
+				    	int duration = Toast.LENGTH_SHORT;
+				    	Toast toast = Toast.makeText(context, text, duration);
+				    	toast.show();
+			        	*/
+		    		}
+			            return true;
+			        }
+			        else {
+			            return false;
+			        }
+			    }
+		    
 		});
 		
 		//when you click a dish, go to dish details page
@@ -216,7 +219,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
             });
 	}
 	//Used for image requests
-	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	    ImageView bmImage;
 	    int position;
 
@@ -441,12 +444,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			if(d.getDishImage() != null){
 				imageview.setImageBitmap(d.getDishImage());
 			}
-			/*
-			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
 			
-			ImageView imageview = (ImageView)itemview.findViewById(R.id.dishpicture);
-			//imageview.setImageResource(d.getDishId());
-			*/
 			// Create a String of Prices
 			String priceString = "";
 			for(int i = 0; i<prices.size(); i++){
