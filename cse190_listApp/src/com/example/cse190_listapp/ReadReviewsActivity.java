@@ -57,8 +57,8 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
         params.add(new BasicNameValuePair("dishID", selectedDish.getDishId()));
         initiateDataConnection(_getReviewsURL, params);
         
-        TextView calories = (TextView) findViewById(R.id.reviews_dish_name);
-		calories.setText(selectedDish.getDishName());
+        TextView dishName = (TextView) findViewById(R.id.reviews_dish_name);
+		dishName.setText("Reviews of " + selectedDish.getDishName());
 		
 	}
 	
@@ -123,6 +123,7 @@ public class ReadReviewsActivity extends Activity implements AsyncResponse {
 				
 				ListView reviewsList = (ListView)findViewById(R.id.reviews_list);
 				reviewsList.setAdapter(adapter);
+				reviewsList.setEmptyView(findViewById(R.id.noReviews));
 	}
 
 	protected String formatDate(String timeStamp) {
