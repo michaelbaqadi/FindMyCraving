@@ -2,42 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    
-    <LinearLayout
-        android:id="@+id/user_info"
-        android:layout_width="85dp"
+        	
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
-        
-	    <ImageView
-	        android:id="@+id/user_profile_pic"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:src="@drawable/review_placeholder" 
-	        android:layout_gravity="center_horizontal"/>"
+        android:text="Username" />
 	    
-	
-	    <TextView
-	        android:id="@+id/username"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
-	        android:text="Username" />
-	    
-        </LinearLayout>
-
     <RatingBar
         android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/username"
         style="?android:attr/ratingBarStyleSmall"
-        android:layout_toRightOf="@id/user_info" 
         android:numStars="5"
         android:stepSize="0.5"
         android:isIndicator="true"/>
@@ -46,8 +28,8 @@
         android:id="@+id/date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="7dp"
+        android:layout_below="@id/username"
         android:layout_toRightOf="@id/rating"
         android:text="Date Written" />
 
@@ -55,8 +37,8 @@
         android:id="@+id/rating_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_below="@id/rating"
-        android:layout_toRightOf="@id/user_info"
         android:text="Rating Text" 
         android:minLines="2"/>
 
