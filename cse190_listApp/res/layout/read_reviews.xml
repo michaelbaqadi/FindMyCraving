@@ -23,5 +23,12 @@
         android:layout_height="wrap_content"
         android:listSelector="@android:color/transparent" >
     </ListView>
+    <TextView android:id="@+id/noReviews"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:layout_marginLeft=" 10dp"
+    		android:layout_marginTop="5dp"
+    		android:textSize="15sp"
+    		android:text="There are no reviews for this dish."  />
 
 </LinearLayout>
