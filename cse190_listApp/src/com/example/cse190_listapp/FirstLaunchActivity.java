@@ -208,6 +208,10 @@ public class FirstLaunchActivity extends Activity implements AsyncResponse{
 			  editor.putString("userID", userID);
 			  editor.putString("isLoggedIn", "true");
 			  editor.commit();
+			  
+			  // Clear fields
+			  userEmail.setText("");
+			  userPassword.setText("");
         	// Create user object
         	
         	Intent intent = new Intent(this, DisplayDishesActivity.class);

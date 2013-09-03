@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,8 +45,6 @@ import android.widget.Toast;
 
 import com.backendWebService.AsyncResponse;
 import com.backendWebService.DownloadWebpageTask;
-import com.example.cse190_listapp.DisplayDishesActivity.DownloadImageTask;
-import com.example.cse190_listapp.DisplayDishesActivity.MyListAdapter;
 //hello
 public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
         List<Dish>  dish = new  ArrayList<Dish>();
@@ -58,6 +57,8 @@ public class DisplayRestaurantMenu extends Activity implements AsyncResponse {
         final String _server = "http://www.cakesbyannonline.com/cse190/image_dish_sm/";
         double longitude=0;
         double latitude=0;
+        private int imgCounter= 0;
+        ProgressDialog progress_dialog;
         
 private LocationManager lm;
         
@@ -115,6 +116,11 @@ private LocationManager lm;
                 getActionBar().show();
                 setContentView(R.layout.displayrestaurantmenu);
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
+                
+                progress_dialog = new ProgressDialog(DisplayRestaurantMenu.this);
+        	    progress_dialog.setMessage("Loading please wait..");
+        	    progress_dialog.setCancelable(false);
+        	    progress_dialog.show();
                 
                 /************** GPS ****************/
                 
@@ -237,7 +243,7 @@ private LocationManager lm;
     			 jsonDish.getString("restaurantURL")
     			 ));
     			
-    			new DownloadImageTask(i).execute(_server + dish.get(i).getPictureSm());
+    			//new DownloadImageTask(i).execute(_server + dish.get(i).getPictureSm());
     		}
     		
     		
@@ -259,10 +265,17 @@ private LocationManager lm;
     		
     		if(dish.get(0) != null){
     			TextView restaurantName = (TextView)findViewById(R.id.restName);
-    			restaurantName.setText(dish.get(0).getRestaurantName());
+    			restaurantName.setText(dish.get(0).getRestaurantName() + " Menu");
     		}
+    		
     		populateDishesWithPrices();
     		populateDishesWithCalories();
+    		getDishImages();
+    	}
+        private void getDishImages(){
+    		for(int i = 0; i<dish.size(); i++){
+    			new DownloadImageTask(i).execute(_server + dish.get(i).getPictureSm());
+    		}
     	}
     	private void populateDishesWithPrices(){
     		for(int i = 0; i<dish.size(); i++){
@@ -394,12 +407,20 @@ private LocationManager lm;
     	    }
 
     	    protected void onPostExecute(Bitmap result) {
-    	        // set the dish Bitmap
+    	    	// set the dish Bitmap
     	    	dish.get(position).setDishImage(result);
-    	    	ArrayAdapter<Dish> adapter = new MyListAdapter();
-    			ListView list = (ListView)findViewById(R.id.dishlistview6);
-    			list.setAdapter(adapter);
-    			adapter.notifyDataSetChanged();
+    	    	//Increment image counter
+    	    	imgCounter++;
+    	    	//Log.d("ImgCount", Integer.toString(imgCounter));
+    	    	//Log.d("dishSize", Integer.toString(dish.size()));
+    	    	if(imgCounter == dish.size()){
+    	    		ArrayAdapter<Dish> adapter = new MyListAdapter();
+    				ListView list = (ListView)findViewById(R.id.dishlistview6);
+    				list.setAdapter(adapter);
+    				adapter.notifyDataSetChanged();
+    				progress_dialog.cancel();
+    				imgCounter = 0;
+    	    	}
     	    }
     	}
         @Override

@@ -58,7 +58,8 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	List<DishCalories> calories = new ArrayList<DishCalories>();
 	double longitude=0;
 	double latitude=0;
-	//static int counter = 0;
+	
+	static int imgCounter = 0;
 	private static final boolean DEBUG_GPS = true;
 	private static final String _getDishURL = "https://www.cakesbyannonline.com/cse190/sql_getDishTest.php";
 	ProgressDialog progress_dialog ;
@@ -121,9 +122,10 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#881113")));
 		getActionBar().show();
+		//popup dialog for loading
 		progress_dialog = new ProgressDialog(DisplayDishesActivity.this);
 	    progress_dialog.setMessage("Loading please wait..");
-	    progress_dialog.setCancelable(true);
+	    progress_dialog.setCancelable(false);
 	    progress_dialog.show();
 		
 		setContentView(R.layout.mainpage);
@@ -150,13 +152,14 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
         params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
         params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
         
-		getDishData(params);	
+		getDishData(params);
+		
 		
 		EditText search = (EditText)findViewById(R.id.autoCompleteTextView1);
 		search.setOnEditorActionListener(new OnEditorActionListener() {
 		    @Override
 		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+		        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 		        	
 		        	
 		        	//Hid the keyboard after hitting search
@@ -176,6 +179,12 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			            params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
 			            params.add(new BasicNameValuePair("searchTerm", search.getText().toString()));
 			            
+			            //Show popup
+			            progress_dialog = new ProgressDialog(DisplayDishesActivity.this);
+			    	    progress_dialog.setMessage("Loading please wait..");
+			    	    progress_dialog.setCancelable(false);
+			    	    progress_dialog.show();
+			            
 			            //Empty Dish, prices, calories for new data
 			            dish.removeAll(dish);
 			        	prices.removeAll(prices);
@@ -183,8 +192,12 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			        	
 			        	// Get the dish data
 			        	getDishData(params);
+			        	//getDishImages();
 			    		searchClick = 1;			        	
 			        	
+			    		//if(dish.size() == 0){
+						//	progress_dialog.cancel();
+						//}
 			        	/* Done Button Hit Debug
 			        	Context context = getApplicationContext();
 				    	CharSequence text = "Done Button Hit";
@@ -244,28 +257,50 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 	    protected void onPostExecute(Bitmap result) {
 	        // set the dish Bitmap
 	    	dish.get(position).setDishImage(result);
-	    	ArrayAdapter<Dish> adapter = new MyListAdapter();
-			ListView list = (ListView)findViewById(R.id.dishlistview);
-			list.setAdapter(adapter);
-			adapter.notifyDataSetChanged();
+	    	//Increment image counter
+	    	imgCounter++;
+	    	//Log.d("ImgCount", Integer.toString(imgCounter));
+	    	//Log.d("dishSize", Integer.toString(dish.size()));
+	    	if(imgCounter == dish.size()){
+	    		ArrayAdapter<Dish> adapter = new MyListAdapter();
+				ListView list = (ListView)findViewById(R.id.dishlistview);
+				list.setAdapter(adapter);
+				adapter.notifyDataSetChanged();
+				progress_dialog.cancel();
+				imgCounter = 0;
+	    	}
+	    	
+	    	
 	    }
 	}
 	
 	public void clearSearch(View view){
 	
 		EditText search = (EditText)findViewById(R.id.autoCompleteTextView1);
-		search.setText("");
-		search.requestFocus();
-		//Empty Dish, prices, calories for new data
-        dish.removeAll(dish);
-    	prices.removeAll(prices);
-    	calories.removeAll(calories);
-    	
-    	List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
-        params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
-        
-    	getDishData(params);
+		String testStr = search.getText().toString().trim();
+		Log.d("search_string", testStr);
+		if(testStr.length() > 0){
+			search.setText("");
+			search.requestFocus();
+			//Empty Dish, prices, calories for new data
+	        dish.removeAll(dish);
+	    	prices.removeAll(prices);
+	    	calories.removeAll(calories);
+	    	
+	    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("lat", new StringBuilder().append(latitude).toString()));
+	        params.add(new BasicNameValuePair("long", new StringBuilder().append(longitude).toString()));
+	        
+	        //POPUP
+	        //Show popup
+	        progress_dialog = new ProgressDialog(DisplayDishesActivity.this);
+		    progress_dialog.setMessage("Loading please wait..");
+		    progress_dialog.setCancelable(false);
+		    progress_dialog.show();
+		    
+	    	getDishData(params);
+	    	getDishImages();
+		}
 	}
 	
 	private void getDishData(List<NameValuePair> params){
@@ -311,13 +346,12 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			Log.v("status:", "Dish Size " + Integer.toString(dish.size()));
 			//list.setEmptyView(findViewById(R.id.emptyElement));
 			if(dish.size()==0){
-			adapter.clear();
+				progress_dialog.cancel();
+				adapter.clear();
 			} else {
 			adapter.notifyDataSetChanged();
 			}
-		}
-		progress_dialog.cancel();
-		
+		}		
 	}
 	
 	//Populates dish List, price List, and Calories List
@@ -367,8 +401,6 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			 jsonDish.getString("restaurantZip"),
 			 jsonDish.getString("restaurantURL")
 			 ));
-			
-			new DownloadImageTask(i).execute(_server + dish.get(i).getPictureSm());
 		}
 		
 		
@@ -387,10 +419,18 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			 String dishPortion = jsonDish.getString("dishPricePortionSize");
 			 prices.add(new DishPrice(dishid, price, dishPortion));
 		}
-		
-		populateDishesWithPrices();
-		populateDishesWithCalories();
+		if(dish.size() > 0){
+			getDishImages();
+			populateDishesWithPrices();
+			populateDishesWithCalories();
+		} 
 	}
+	private void getDishImages(){
+		for(int i = 0; i<dish.size(); i++){
+			new DownloadImageTask(i).execute(_server + dish.get(i).getPictureSm());
+		}
+	}
+	
 	private void populateDishesWithPrices(){
 		for(int i = 0; i<dish.size(); i++){
 			for(int j = 0; j<prices.size(); j++){
@@ -416,6 +456,7 @@ public class DisplayDishesActivity extends Activity implements AsyncResponse {
 			ListView list = (ListView)findViewById(R.id.dishlistview);
 			list.setAdapter(adapter);
 			list.setEmptyView(findViewById(R.id.emptyElement));
+			
 			//list.requestFocus();
 		
 		

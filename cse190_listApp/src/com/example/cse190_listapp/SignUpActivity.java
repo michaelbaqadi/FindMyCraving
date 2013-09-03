@@ -213,6 +213,7 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 			userEmailInput = (EditText) findViewById(R.id.email2);
 			userNameInput = (EditText) findViewById(R.id.userNameInput);
 			userPassword1 = (EditText) findViewById(R.id.password1Input);
+			userPassword2 = (EditText) findViewById(R.id.password2Input);
 			
 			String userEmail = userEmailInput.getText().toString().trim();
 			String userName = userNameInput.getText().toString().trim();
@@ -226,7 +227,11 @@ public class SignUpActivity extends Activity implements AsyncResponse {
 			  editor.putString("userID",userID);
 			  editor.putString("isLoggedIn", "true");
 			  editor.commit();
-			 		
+			userEmailInput.setText("");
+			userNameInput.setText("");
+			userPassword1.setText("");
+			userPassword2.setText("");
+			
         	Context context = getApplicationContext();
         	CharSequence text = "user added";
         	int duration = Toast.LENGTH_SHORT;

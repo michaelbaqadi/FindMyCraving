@@ -166,7 +166,12 @@ public class EditProfileActivity extends Activity implements AsyncResponse {
 			Toast toast = Toast.makeText(context, "Update Successful", Toast.LENGTH_LONG);
 		    toast.show();
 		    
-		    
+		    //Clear editText Fields
+		    email.setText("");
+		    user.setText("");
+		    password1.setText("");
+		    password2.setText(""); 
+		    finish();
 			Intent intent = new Intent(this, DisplayDishesActivity.class);
 			startActivity(intent);
 		} else {
